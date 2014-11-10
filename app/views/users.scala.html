@@ -1,0 +1,15 @@
+@(users: List[String])
+
+@main(models.Company.name) {
+
+    <h1>Willkommen bei @models.Company.name</h1>
+    
+    <p>Zur Zeit sind folgende Benutzer registriert:</p>
+    
+    <ul>
+    @for(user <- users) {
+    	<li>@user</li>	
+   	}
+    </ul>
+    
+}
