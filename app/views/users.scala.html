@@ -1,4 +1,4 @@
-@(users: List[String])
+@(users: List[models.User])
 
 @main(models.Company.name) {
 
@@ -8,7 +8,7 @@
     
     <ul>
     @for(user <- users) {
-    	<li>@user</li>	
+    	<li>@user.name</li>	
    	}
     </ul>
     

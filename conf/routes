@@ -6,7 +6,7 @@
 GET     /                           controllers.Application.index
 
 POST    /addUser					controllers.Application.addUser
-GET     /showUser					controllers.Application.showUser(user: String?="anonymous")
+GET     /welcomeUser		   		controllers.Application.welcomeUser(username)
 GET     /showUsers					controllers.Application.showUsers
 
 # Map static resources from the /public folder to the /assets URL path
