@@ -1,7 +1,16 @@
-@(message: String)
+@(userForm: Form[models.User])
 
-@main(message) {
+@import views.html.helper
 
-    <h1>Willkommen bei @message</h1>
+@main(models.Company.name) {
+
+    <h1>Willkommen bei @models.Company.name</h1>
+    
+    <p>Registrieren:
+    	@helper.form(action = routes.Application.addUser()) {
+  		@helper.inputText(userForm("Name"))
+	}
+	</p>
+    
 
 }
