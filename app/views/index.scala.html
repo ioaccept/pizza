@@ -7,7 +7,7 @@
     <h1>Willkommen bei @models.Company.name</h1>
     
     <p>Registrieren:
-    	@helper.form(action = routes.Application.addUser()) {
+    	@helper.form(action = routes.UserController.addUser()) {
   		@helper.inputText(userForm("Name"))
 	}
 	</p>
