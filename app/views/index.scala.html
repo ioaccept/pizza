@@ -1,4 +1,4 @@
-@(userForm: Form[models.User])
+@(userForm: Form[forms.CreateUserForm])
 
 @import views.html.helper
 
@@ -9,6 +9,7 @@
     <p>Registrieren:
     	@helper.form(action = routes.UserController.addUser()) {
   		@helper.inputText(userForm("Name"))
+		<input type="submit" value="Speichern" />
 	}
 	</p>
     
