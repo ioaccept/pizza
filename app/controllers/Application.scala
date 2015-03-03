@@ -8,7 +8,7 @@ import models._
 
 /**
  * Main controller of the Pizza Service application.
- * 
+ *
  * @author ob, scs
  */
 object Application extends Controller {
@@ -16,7 +16,7 @@ object Application extends Controller {
   /**
    * Shows the start page of the application.
    */
-  def index = Action {
+  def index : Action[AnyContent] = Action {
     Ok(views.html.index(controllers.UserController.userForm))
   }
 
