@@ -10,7 +10,7 @@ import forms.CreateUserForm
 
 /**
  * Controller for user specific operations.
- * 
+ *
  * @author ob, scs
  */
 object UserController extends Controller {
@@ -25,7 +25,7 @@ object UserController extends Controller {
   /**
    * Adds a new user with the given data to the system.
    */
-  def addUser = Action { implicit request =>
+  def addUser : Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(
       formWithErrors => {
         BadRequest(views.html.index(formWithErrors))
@@ -40,14 +40,14 @@ object UserController extends Controller {
   /**
    * Shows the welcome view for a newly registered user.
    */
-  def welcomeUser(username: String) = Action {
+  def welcomeUser(username: String) : Action[AnyContent] = Action {
     Ok(views.html.welcomeUser(username))
   }
 
   /**
    * List all users currently available in the system.
    */
-  def showUsers = Action {
+  def showUsers : Action[AnyContent] = Action {
     Ok(views.html.users(UserService.registeredUsers))
   }
 
