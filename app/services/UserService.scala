@@ -5,11 +5,11 @@ import models.User
 
 /**
  * Service class for user related operations.
- * 
+ *
  * @author ob, scs
  */
 object UserService {
-  
+
   /**
    * Adds a new user to the system.
    * @param name name of the new user.
@@ -19,15 +19,15 @@ object UserService {
     // create User
     val newUser = User(-1, name)
     // persist and return User
-    return UserDao.addUser(newUser)   
+    UserDao.addUser(newUser)
   }
-  
+
   /**
    * Gets a list of all registered users.
    * @return list of users.
    */
   def registeredUsers: List[User] = {
-    return UserDao.registeredUsers
+    UserDao.registeredUsers
   }
 
 }
