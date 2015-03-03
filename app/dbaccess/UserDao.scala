@@ -1,8 +1,8 @@
 package dbaccess
 
-import anorm._
+import anorm.SQL
 import play.api.Play.current
-import play.api.db._
+import play.api.db.DB
 import anorm.NamedParameter.symbol
 import models.User
 

@@ -1,10 +1,8 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import play.api.data._
-import play.api.data.Forms._
-import models._
+import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.data.Form
+import play.api.data.Forms.{mapping,text}
 import services.UserService
 import forms.CreateUserForm
 
@@ -24,6 +22,8 @@ object UserController extends Controller {
 
   /**
    * Adds a new user with the given data to the system.
+   *
+   * @return welcome page for new user
    */
   def addUser : Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(

@@ -1,10 +1,6 @@
 package controllers
 
-import play.api._
-import play.api.mvc._
-import play.api.data._
-import play.api.data.Forms._
-import models._
+import play.api.mvc.{Action, Controller, Ok, AnyContent}
 
 /**
  * Main controller of the Pizza Service application.
@@ -15,6 +11,8 @@ object Application extends Controller {
 
   /**
    * Shows the start page of the application.
+   *
+   * @return main web page
    */
   def index : Action[AnyContent] = Action {
     Ok(views.html.index(controllers.UserController.userForm))
