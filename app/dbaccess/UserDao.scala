@@ -8,7 +8,7 @@ import models.User
 
 /**
  * Data access object for user related operations.
- * 
+ *
  * @author ob, scs
  */
 object UserDao {
@@ -16,7 +16,7 @@ object UserDao {
   /**
    * Creates the given user in the database.
    * @param user the user object to be stored.
-   * @return the persisted user object 
+   * @return the persisted user object
    */
   def addUser(user: User): User = {
     DB.withConnection { implicit c =>
@@ -25,7 +25,7 @@ object UserDao {
           'name -> user.name).executeInsert()
       user.id = id.get
     }
-    return user
+    user
   }
 
   /**
@@ -37,7 +37,7 @@ object UserDao {
       val selectUsers = SQL("Select id, name from User;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"))).toList
-      return users;
+      users;
     }
   }
 
