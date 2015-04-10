@@ -2,10 +2,9 @@
  
 # --- !Ups
  
-CREATE TABLE User (
-    id bigint(20) NOT NULL AUTO_INCREMENT,
-    name varchar(255) NOT NULL,
-    PRIMARY KEY (id)
+CREATE TABLE Users (
+    id serial PRIMARY KEY,
+    name varchar(255) NOT NULL
 );
  
 # --- !Downs

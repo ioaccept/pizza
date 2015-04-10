@@ -21,7 +21,7 @@ object UserDao {
   def addUser(user: User): User = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into User(name) values ({name})").on(
+        SQL("insert into Users(name) values ({name})").on(
           'name -> user.name).executeInsert()
       user.id = id.get
     }
@@ -34,7 +34,7 @@ object UserDao {
    */
   def registeredUsers: List[User] = {
     DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select id, name from User;")
+      val selectUsers = SQL("Select id, name from Users;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"))).toList
       users;
