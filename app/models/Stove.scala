@@ -7,14 +7,15 @@ class Stove(capacity: Int = 1) {
   private var queue = Queue[List[Pizza]]()
 
   def +=(pizza: Pizza): Stove = {
-    if (queue.isEmpty)
+    if (queue.isEmpty) {
       queue = Queue(List(pizza))
-    else {
+    } else {
       val last: List[Pizza] = queue.last
-      queue = if (last.length < capacity)
+      queue = if (last.length < capacity) {
         queue.init :+ (pizza :: last)
-      else
+      } else {
         queue :+ List(pizza)
+      }
     }
     this
   }
@@ -23,9 +24,9 @@ class Stove(capacity: Int = 1) {
     listOfPizza.foldLeft(this) { (stove, pizza) => stove += pizza }
 
   def next(): List[Pizza] =
-    if (queue.isEmpty)
+    if (queue.isEmpty) {
       List()
-    else {
+    } else {
       val first = queue.head
       queue = queue.tail
       first
