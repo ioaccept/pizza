@@ -6,6 +6,8 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.6"
 
+resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
+
 libraryDependencies ++= Seq(
   jdbc,
   anorm,
