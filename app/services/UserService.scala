@@ -1,6 +1,6 @@
 package services
 
-import dbaccess.UserDao
+import dbaccess.{UserDaoT, UserDao}
 import models.User
 
 /**
@@ -8,7 +8,9 @@ import models.User
  *
  * @author ob, scs
  */
-object UserService {
+trait UserServiceT {
+
+  val userDao : UserDaoT = UserDao
 
   /**
    * Adds a new user to the system.
@@ -19,7 +21,7 @@ object UserService {
     // create User
     val newUser = User(-1, name)
     // persist and return User
-    UserDao.addUser(newUser)
+    userDao.addUser(newUser)
   }
 
   /**
@@ -27,7 +29,9 @@ object UserService {
    * @return list of users.
    */
   def registeredUsers: List[User] = {
-    UserDao.registeredUsers
+    userDao.registeredUsers
   }
 
 }
+
+object UserService extends UserServiceT

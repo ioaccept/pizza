@@ -11,7 +11,7 @@ import models.User
  *
  * @author ob, scs
  */
-object UserDao {
+trait UserDaoT {
 
   /**
    * Creates the given user in the database.
@@ -37,8 +37,10 @@ object UserDao {
       val selectUsers = SQL("Select id, name from Users;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"))).toList
-      users;
+      users
     }
   }
 
 }
+
+object UserDao extends UserDaoT
