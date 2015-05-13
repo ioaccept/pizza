@@ -1,6 +1,6 @@
 package services
 
-import dbaccess.{UserDaoT, UserDao}
+import dbaccess.{UserDao, UserDaoT}
 import models.User
 
 /**
@@ -10,7 +10,7 @@ import models.User
  */
 trait UserServiceT {
 
-  val userDao : UserDaoT = UserDao
+  val userDao: UserDaoT = UserDao
 
   /**
    * Adds a new user to the system.
@@ -23,6 +23,13 @@ trait UserServiceT {
     // persist and return User
     userDao.addUser(newUser)
   }
+
+  /**
+   * Removes a user by id from the system.
+   * @param id users id.
+   * @return a boolean success flag.
+   */
+  def rmUser(id: Long): Boolean = userDao.rmUser(id)
 
   /**
    * Gets a list of all registered users.

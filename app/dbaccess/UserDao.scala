@@ -29,6 +29,18 @@ trait UserDaoT {
   }
 
   /**
+   * Removes a user by id from the database.
+   * @param id the users id
+   * @return a boolean success flag
+   */
+  def rmUser(id: Long): Boolean = {
+    DB.withConnection { implicit c =>
+      val rowsCount = SQL("delete from Users where id = ({id})").on('id -> id).executeUpdate()
+      rowsCount > 0
+    }
+  }
+
+  /**
    * Returns a list of available user from the database.
    * @return a list of user objects.
    */
