@@ -26,5 +26,27 @@ class ApplicationSpec extends Specification {
       contentType(home) must beSome.which(_ == "text/html")
       contentAsString(home) must contain ("Willkommen")
     }
+
+    "add a user" in new WithApplication{
+      val username = "TestUser"
+      val result = route(FakeRequest(POST, "/addUser").withFormUrlEncodedBody(
+          "Name" -> username
+        )).get
+
+      status(result) must_== SEE_OTHER
+
+      val nextUrl = redirectLocation(result) match {
+        case Some(s: String) => s
+        case _ => ""
+      }
+      nextUrl must contain("/welcomeUser?username=" + username)
+
+      val newResult = route(FakeRequest(GET, nextUrl)).get
+
+      status(newResult) must equalTo(OK)
+      contentType(newResult) must beSome.which(_ == "text/html")
+      contentAsString(newResult) must contain("Willkommen " + username)
+
+    }
   }
 }
