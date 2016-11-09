@@ -1,10 +1,10 @@
-name := """PizzaInitial1"""
+name := """PizzaFlitza""" // please change me
 
-version := "1.0-SNAPSHOT"
+version := "Milestone0" // please change me later
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.8"
 
 resolvers += "Scalaz Bintray Repo" at "https://dl.bintray.com/scalaz/releases"
 
