@@ -7,7 +7,20 @@ GET         /                    controllers.Application.index
 
 POST        /addUser             controllers.UserController.addUser
 GET         /welcomeUser         controllers.UserController.welcomeUser(username)
-GET         /showUsers           controllers.UserController.showUsers
+GET         /registerUser        controllers.UserController.registerUser
+
+GET         /showUsers           controllers.LoginController.showUsers
+
+POST        /showUser            controllers.LoginController.showUser
+GET         /showUser            controllers.LoginController.showUser
+
+GET         /loginUser           controllers.LoginController.loginUser(username)
+GET         /loginStuff          controllers.LoginController.loginStuff(username)
+
+POST        /addOrder            controllers.OrderController.addOrder(username)
+
+GET         /myOrder             controllers.OrderController.showOrders(username)
+
 
 # REST API
 GET         /api                 rest.Api.api

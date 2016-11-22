@@ -1,18 +1,24 @@
-@(userForm: Form[forms.CreateUserForm])
+@(loginForm: Form[forms.LoginUserForm])
+
 
 @import views.html.helper
 
 @main(models.Company.name) {
 
     <h1>Willkommen bei @models.Company.name</h1>
-    
-    <p>Registrieren:
-    	@helper.form(action = routes.UserController.addUser()) {
-  		@helper.inputText(userForm("Name"))
-		<input type="submit" value="Speichern" />
-	}
-	</p>
-    
+
+    <p>Login:
+        @helper.form(action = routes.LoginController.showUser()) {
+            @helper.select(
+                loginForm("Rolle"),
+                helper.options(List("Kunde","Mitarbeiter")),
+                '_label -> "Rolle"
+            )
+            @helper.inputText(loginForm("Name"))
+            <input type="submit" value="Login" />
+        }
+    </p>
     <p><a href="/showUsers">Registrierte Benutzer</a></p>
 
+    <p><a href="/registerUser">Registrierte dich</a></p>
 }

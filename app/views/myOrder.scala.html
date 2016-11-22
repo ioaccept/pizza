@@ -1,0 +1,29 @@
+@(orders: List[models.Order])
+
+@main(models.Company.name) {
+
+    <h1>Deine Bestllungen bei @models.Company.name</h1>
+    
+    <p>Bestellübersicht</p>
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Bestellung</th>
+            <th>Anzahl</th>
+            <th>Größe</th>
+            <th>Preis</th>
+        </tr>
+        @for(order <- orders) {
+            <tr>
+                <td>@order.orderName</td>
+                <td>@order.orderItem</td>
+                <td>@order.orderQuantity</td>
+                <td>@order.orderSize</td>
+                <td>@order.orderPrice</td>
+            </tr>
+        }
+    </table>
+    
+}

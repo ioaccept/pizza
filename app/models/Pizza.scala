@@ -1,4 +1,9 @@
 package models
 
-class Pizza
+/**
+  *
+  * @param id
+  * @param name
+  */
+case class Pizza()
 
