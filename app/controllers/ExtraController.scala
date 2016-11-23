@@ -13,10 +13,5 @@ import services.OrderService
   * @author ob, scs
   */
 object ExtraController extends Controller {
-  /**
-    * List all extras
-    */
-  def showExtrass(name: String): Action[AnyContent] = Action {
-    Ok(views.html.myOrder(OrderService.showOrders(name)))
-  }
+
 }

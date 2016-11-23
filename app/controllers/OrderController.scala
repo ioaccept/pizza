@@ -1,11 +1,10 @@
 package controllers
 
-import forms.{CreateOrderForm}
+import forms.CreateOrderForm
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
-import services.OrderService
-
+import services.{ExtrasService, ItemService, OrderService}
 
 /**
   * Controller for user specific operations.
@@ -21,7 +20,9 @@ object OrderController extends Controller {
     mapping(
       "ItemName" -> text,
       "ItemSize" -> number,
-      "ItemQuantity" -> number
+      "ItemQuantity" -> number,
+      "Extras" -> text,
+      "ExtrasQuantity" -> number
     )(CreateOrderForm.apply)(CreateOrderForm.unapply))
 
   /**
@@ -35,7 +36,15 @@ object OrderController extends Controller {
         BadRequest(views.html.fehler(formWithErrors))
       },
       userData => {
-        val orderPrice = userData.itemQuantity * userData.itemSize * 0.5
+        val itemPrice = ItemService.showItem.find {
+          _.name == userData.itemName
+        }.headOption.get.price
+        val extrasPrice = ExtrasService.showExtras.find {
+          _.name == userData.extras
+        }.headOption.get.price
+
+        val orderPrice = userData.itemQuantity * userData.itemSize * itemPrice + userData.extrasQuantity * extrasPrice
+
         services.OrderService.addOrder(username, userData.itemName, userData.itemQuantity, userData.itemSize, orderPrice)
         Redirect(routes.OrderController.showOrders(username)).
           flashing("success" -> "Order saved!")

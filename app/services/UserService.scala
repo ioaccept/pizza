@@ -20,7 +20,7 @@ trait UserServiceT {
     */
   def addUser(name: String): User = {
     // create User
-    val newUser = User(-1, name)
+    val newUser = User(-1, name, "nein")
     // persist and return User
     userDao.addUser(newUser)
   }
@@ -33,10 +33,6 @@ trait UserServiceT {
     */
   def rmUser(id: Long): Boolean = userDao.rmUser(id)
 
-
-
-
-
   /**
     * Gets a list of all registered users.
     *
@@ -46,14 +42,6 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 
-  /**
-    * Get a Option with the name from the user
-    *
-    * @return name from the user
-    */
-  def logUser(name: String): Option[String] = {
-    userDao.logUser(name)
-  }
 }
 
   object UserService extends UserServiceT

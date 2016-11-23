@@ -19,8 +19,7 @@ object LoginController extends Controller {
     */
   val loginForm = Form(
     mapping(
-      "Name" -> text,
-      "Rolle" -> text)
+      "Name" -> text)
     (LoginUserForm.apply)(LoginUserForm.unapply))
 
   /**
@@ -43,31 +42,29 @@ object LoginController extends Controller {
   def loginStuff(username: String): Action[AnyContent] = Action {
     Ok(views.html.loginStuff(username))
   }
-
   /**
     * Search a User
     *
     * @return page for registered User
     */
+def showUser: Action[AnyContent] = Action { implicit request =>
+  loginForm.bindFromRequest.fold(
+    formWithErrors => {
+      BadRequest(views.html.index(controllers.LoginController.loginForm))
+    },
+    userData => {
+      val getUser = UserService.registeredUsers.find {
+        _.name == userData.name
+      }.headOption.get.name
+      val getRole = UserService.registeredUsers.find {
+        _.name == userData.name
+      }.headOption.get.admin
 
-    def showUser: Action[AnyContent] = Action { implicit request =>
-      loginForm.bindFromRequest.fold(
-        formWithErrors => {
-          BadRequest(views.html.index(controllers.LoginController.loginForm))
-        },
-        userData => {
-          val getUser = services.UserService.logUser(userData.name)
-          getUser match {
-            case Some(user) =>
-              val username: String = user
-              if (userData.role == "Kunde") {
-                Redirect(routes.LoginController.loginUser(username))
-              } else {
-                Redirect(routes.LoginController.loginStuff(username))
-              }
-            case None =>
-              Redirect(routes.UserController.registerUser())
+          if (getRole == "nein") {
+            Redirect(routes.LoginController.loginUser(getUser))
+          } else {
+            Redirect(routes.LoginController.loginStuff(getUser))
           }
-        })
-    }
+    })
+}
 }
