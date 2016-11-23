@@ -20,6 +20,7 @@ trait ItemServiceT {
   def showItem: List[Item] = {
     itemDao.showItem
   }
+
 }
 
 object ItemService extends ItemServiceT

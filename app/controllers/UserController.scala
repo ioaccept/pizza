@@ -3,7 +3,6 @@ package controllers
 import play.api.mvc.{Action, AnyContent, Controller}
 import play.api.data.Form
 import play.api.data.Forms.{mapping, text}
-import services.{PizzaService, UserService}
 import forms.CreateUserForm
 
 

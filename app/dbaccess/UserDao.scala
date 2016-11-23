@@ -50,27 +50,10 @@ trait UserDaoT {
     */
   def registeredUsers: List[User] = {
     DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select id, name from Users;")
+      val selectUsers = SQL("Select id, name, admin from Users;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"))).toList
+      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"), row[String]("admin"))).toList
       users
-    }
-  }
-
-  /**
-    *Return the logged User from database
-    *
-    * @return user
-    */
-  def logUser(name: String): Option[String] = {
-    DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select name from Users where name = ({name}) limit 1").on('name -> name)
-        .apply
-        .headOption
-      selectUsers match {
-        case Some(row) => Some(row[String]("name"))
-        case None => None
-      }
     }
   }
 }

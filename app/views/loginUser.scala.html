@@ -26,22 +26,31 @@
         @for(extra <- extras) {
             <tr>
                 <td>@extra.name</td>
-                <td>@extra.price</td>
+                <td>@extra.price €</td>
             </tr>
         }
     </table>
 
     <p>Bestellen:
         @helper.form(action = routes.OrderController.addOrder(username)) {
-            @helper.select(
-                orderForm("ItemName"),
-                helper.options(List("Margerita", "Funghi", "Cola", "Tiramisu")),
-                '_label -> "Auswahl"
-            )
-            Menge: <input type="number" name="ItemQuantity"><br>
-            Größe: <input type="number" name="ItemSize"><br>
-        <input type="submit" value="Bestellen" />
-    }
+            <select name="ItemName">
+            @for(item <- items) {
+                <option value="@item.name">@item.name</option>
+            }
+            </select><br><br>
+            Menge: <input type="number" name="ItemQuantity"> <br><br>
+            Größe: <input type="number" name="ItemSize"> <br><br>
+
+            <select name="Extras">
+                <option value="null">Kein Extra</option>
+            @for(extra <- extras) {
+                <option value="@extra.name">@extra.name</option>
+            }
+            </select><br><br>
+            Extramenge: <input type="number" name="ExtrasQuantity" value="0"> <br><br>
+
+            <input type="submit" value="Bestellen" />
+        }
     </p>
     <p><a href="/myOrder?username=@username">Meine Bestellungen</a></p>
 }
