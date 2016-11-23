@@ -1,0 +1,47 @@
+@(username: String, items: List[models.Item], extras: List[models.Extras], orderForm: Form[forms.CreateOrderForm])
+
+@main(models.Company.name) {
+
+    <h1>Hallo Kunde @username bei @models.Company.name</h1>
+    <table>
+
+        <tr>
+            <th>Kategorie</th>
+            <th>Name</th>
+            <th>Preis pro Einheit</th>
+        </tr>
+        @for(item <- items) {
+
+            <tr>
+                <td>@item.catName</td>
+                <td>@item.name</td>
+                <td>@item.price €</td>
+            </tr>
+        }
+    </table>
+
+    <table>
+        <th>Extras</th>
+        <th>Preis pro Extra</th>
+        @for(extra <- extras) {
+            <tr>
+                <td>@extra.name</td>
+                <td>@extra.price</td>
+            </tr>
+        }
+    </table>
+
+    <p>Bestellen:
+        @helper.form(action = routes.OrderController.addOrder(username)) {
+            @helper.select(
+                orderForm("ItemName"),
+                helper.options(List("Margerita", "Funghi", "Cola", "Tiramisu")),
+                '_label -> "Auswahl"
+            )
+            Menge: <input type="number" name="ItemQuantity"><br>
+            Größe: <input type="number" name="ItemSize"><br>
+        <input type="submit" value="Bestellen" />
+    }
+    </p>
+    <p><a href="/myOrder?username=@username">Meine Bestellungen</a></p>
+}

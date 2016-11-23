@@ -1,0 +1,25 @@
+package services
+
+import dbaccess.{ExtrasDao, ExtrasDaoT}
+import models.Extras
+
+/**
+  * Service class for user related operations.
+  *
+  * @author ob, scs
+  */
+trait ExtrasServiceT {
+
+  val extrasDao: ExtrasDaoT = ExtrasDao
+
+  /**
+    * Gets a list of all registered users.
+    *
+    * @return list of users.
+    */
+  def showExtras: List[Extras] = {
+    extrasDao.showExtra
+  }
+}
+
+object ExtrasService extends ExtrasServiceT

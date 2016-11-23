@@ -1,0 +1,14 @@
+@(userForm: Form[forms.CreateUserForm])
+
+@import views.html.helper
+
+@main(models.Company.name) {
+    <h1>Willkommen bei @models.Company.name</h1>
+
+    <p>Registrieren:
+        @helper.form(action = routes.UserController.addUser()) {
+            @helper.inputText(userForm("Name"))
+            <input type="submit" value="Speichern" />
+        }
+    </p>
+}
