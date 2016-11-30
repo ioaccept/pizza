@@ -17,5 +17,4 @@ object Application extends Controller {
   def index : Action[AnyContent] = Action {
     Ok(views.html.index(controllers.LoginController.loginForm))
   }
-
 }
