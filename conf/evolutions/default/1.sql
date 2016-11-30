@@ -10,7 +10,7 @@ CREATE TABLE Users (
 );
 
 INSERT INTO Users values (1, 'Padrone', 10, 'ja');
-INSERT INTO Users values (2, 'Andi', 5, 'nein');
+INSERT INTO Users values (2, 'Emil', 5, 'nein');
 
 # --- !Downs
  
