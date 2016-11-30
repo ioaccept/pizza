@@ -35,19 +35,18 @@
         @helper.form(action = routes.OrderController.addOrder(username)) {
             <select name="ItemName">
             @for(item <- items) {
-                <option value="@item.name">@item.name</option>
+                <option>@item.name</option>
             }
             </select><br><br>
-            Menge: <input type="number" name="ItemQuantity"> <br><br>
-            Größe: <input type="number" name="ItemSize"> <br><br>
+            Menge: <input type="number" name="ItemQuantity" min="1"> <br><br>
+            Größe: <input type="number" name="ItemSize" min="1"> <br><br>
 
             <select name="Extras">
-                <option value="null">Kein Extra</option>
             @for(extra <- extras) {
                 <option value="@extra.name">@extra.name</option>
             }
             </select><br><br>
-            Extramenge: <input type="number" name="ExtrasQuantity" value="0"> <br><br>
+            Extramenge: <input type="number" name="ExtrasQuantity" value="0" min="0"> <br><br>
 
             <input type="submit" value="Bestellen" />
         }
