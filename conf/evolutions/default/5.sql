@@ -8,5 +8,6 @@ name varchar(255) NOT NULL,
 price number(10, 2)
 );
 
-INSERT INTO Extras values (1, 'Käse', 0.50);
-INSERT INTO Extras values (2, 'Soße', 0.50);
+INSERT INTO Extras values (1, 'Keine', 0);
+INSERT INTO Extras values (2, 'Käse', 0.50);
+INSERT INTO Extras values (3, 'Soße', 0.50);
