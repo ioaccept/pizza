@@ -1,0 +1,54 @@
+@(users: List[models.User], userForm: Form[forms.CreateUserForm])
+
+@main(models.Company.name) {
+
+    <h1>Kundenverwaltung bei @models.Company.name</h1>
+
+    <p>Zur Zeit sind folgende Benutzer registriert:</p>
+
+    <ul>
+    @for(user <- users) {
+        <li>@user.name, @user.password, @user.distance, @user.admin</li>
+    }
+    </ul>
+    <p>Kunden hinzufügen:
+        @helper.form(action = routes.UserController.addUser()) {
+            Username:<input type="text" name="Name" ><br><br>
+        Passwort:<input type="password" name="Password"><br><br>
+        Distanz<input type="number" name="Distance" min="1" max="20"><br><br>
+        <select name="Admin">
+            <option value="ja">Ja</option>
+            <option value="nein">Nein</option>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Speichern" />
+    }
+    </p>
+
+    <p>Kundenänderung:
+        @helper.form(action = routes.UserController.changeUser()) {
+            <select name="Name">
+            @for(user <- users) {
+                <option>@user.name</option>
+            }
+            </select>
+            <br>
+            <br>
+            Passwort:<input type="password" name="Password">
+            <br>
+            <br>
+            Distanz<input type="number" name="Distance" min="1" max="20">
+            <br>
+            <br>
+            <select name="Admin">
+                <option value="ja">Ja</option>
+                <option value="nein">Nein</option>
+            </select>
+            <br>
+            <br>
+            <input type="submit" value="Speichern" />
+        }
+    </p>
+
+}

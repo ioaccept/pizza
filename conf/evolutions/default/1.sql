@@ -5,12 +5,13 @@
 CREATE TABLE Users (
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL UNIQUE,
+    password varchar(255) NOT NULL,
     distance number(10),
-    admin varchar(255) default 'nein'
+    admin varchar(255)
 );
 
-INSERT INTO Users values (1, 'Padrone', 10, 'ja');
-INSERT INTO Users values (2, 'Emil', 5, 'nein');
+INSERT INTO Users values (1, 'Padrone', 'Padrone', 10, 'ja');
+INSERT INTO Users values (2, 'Emil', 'Emil', 5, 'nein');
 
 # --- !Downs
  

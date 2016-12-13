@@ -7,8 +7,11 @@
 
     <p>Registrieren:
         @helper.form(action = routes.UserController.addUser()) {
-            @helper.inputText(userForm("Name"))
+            Username:<input type="text" name="Name" ><br><br>
+            Passwort:<input type="password" name="Password"><br><br>
+            Distanz<input type="tnumber" name="Distance"><br><br>
+            <input type="hidden" name="Admin" value="nein">
             <input type="submit" value="Speichern" />
-        }
+    }
     </p>
 }

@@ -4,7 +4,7 @@ import anorm.SQL
 import play.api.Play.current
 import play.api.db.DB
 import anorm.NamedParameter.symbol
-import models.User
+import models.{ChangeUser, User}
 
 
 /**
@@ -23,11 +23,26 @@ trait UserDaoT {
   def addUser(user: User): User = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
-        SQL("insert into Users(name) values ({name})").on(
-          'name -> user.name).executeInsert()
+        SQL("insert into Users(name, password, distance, admin) values (({name}), ({password}), ({distance}), ({admin}))").on(
+          'name -> user.name, 'password -> user.password, 'distance -> user.distance, 'admin -> user.admin).executeInsert()
       user.id = id.get
     }
     user
+  }
+
+  /**
+    * Creates the given changeUser in the database.
+    *
+    * @param changeUser the changeUser object to be changed
+    * @return the changed User
+    */
+  def changeUser(changeUser: ChangeUser): ChangeUser = {
+    DB.withConnection { implicit c =>
+      val change =
+        SQL("update Users SET password = ({password}), distance = ({distance}), admin = ({admin}) where name = ({name})").on(
+          'password -> changeUser.password, 'distance -> changeUser.distance, 'admin -> changeUser.admin, 'name -> changeUser.name).executeUpdate()
+    }
+    changeUser
   }
 
   /**
@@ -50,11 +65,12 @@ trait UserDaoT {
     */
   def registeredUsers: List[User] = {
     DB.withConnection { implicit c =>
-      val selectUsers = SQL("Select id, name, admin from Users;")
-      // Transform the resulting Stream[Row] to a List[(String,String)]
-      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"), row[String]("admin"))).toList
+      val selectUsers = SQL("Select * from Users;")
+      // Transform the resulting Stream[Row] to a List[(Long, String, String, BigDecimal, String)]
+      val users = selectUsers().map(row => User(row[Long]("id"), row[String]("name"), row[String]("password"), row[BigDecimal]("distance"), row[String]("admin"))).toList
       users
     }
   }
 }
+
 object UserDao extends UserDaoT

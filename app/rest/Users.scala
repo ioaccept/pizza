@@ -94,7 +94,7 @@ object Users extends Controller {
    * }}}
    * @return info about the new user in a JSON representation
    */
-  def addUser: Action[JsValue] = Action(BodyParsers.parse.json) { implicit request =>
+ def addUser: Action[JsValue] = Action(BodyParsers.parse.json) { implicit request =>
     val username = request.body.validate[Username]
     username.fold(
       errors => {
@@ -102,7 +102,7 @@ object Users extends Controller {
       },
       username => {
         Ok(Json.obj("status" -> "OK",
-          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name)))))
+          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name, username.name, 5, username.name))))) // Noch ändern wenn gebraucht
       }
     )
   }

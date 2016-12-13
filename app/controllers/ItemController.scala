@@ -1,6 +1,7 @@
 package controllers
 
-import play.api.mvc.Controller
+import play.api.mvc.{Action, AnyContent, Controller}
+import services.{ExtrasService, ItemService}
 
 
 /**
@@ -10,4 +11,7 @@ import play.api.mvc.Controller
   */
 object ItemController extends Controller {
 
+  def showItem: Action[AnyContent] = Action {
+    Ok(views.html.sortiment(ItemService.showItem, ExtrasService.showExtras))
+  }
 }

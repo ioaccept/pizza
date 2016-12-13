@@ -1,9 +1,10 @@
 package controllers
 
 import forms.LoginUserForm
+import models.User
 import play.api.mvc.{Action, AnyContent, Controller}
 import play.api.data.Form
-import play.api.data.Forms.{mapping, text}
+import play.api.data.Forms._
 import services.{ExtrasService, ItemService, UserService}
 
 
@@ -19,52 +20,74 @@ object LoginController extends Controller {
     */
   val loginForm = Form(
     mapping(
-      "Name" -> text)
+      "Name" -> nonEmptyText,
+      "Password" -> nonEmptyText)
     (LoginUserForm.apply)(LoginUserForm.unapply))
 
+
   /**
-    * List all users currently available in the system.
+    * Show the view for registered User
+    *
+    * @return the view for registerd User
     */
-  def showUsers: Action[AnyContent] = Action {
-    Ok(views.html.users(UserService.registeredUsers))
+  def loginUser: Action[AnyContent] = Action { request =>
+    request.session.get("user").map { user =>
+      Ok(views.html.loginUser(user, ItemService.showItem, ExtrasService.showExtras, controllers.OrderController.orderForm))
+    }.getOrElse {
+      Unauthorized("NEIN")
+    }
   }
 
   /**
-    * Shows the view for a registered User
+    * Show the view for registerd Stuff
+    *
+    * @return the view for registerd Stuff
     */
-  def loginUser(username: String): Action[AnyContent] = Action {
-    Ok(views.html.loginUser(username, ItemService.showItem, ExtrasService.showExtras, controllers.OrderController.orderForm))
+  def loginStuff: Action[AnyContent] = Action { request =>
+    request.session.get("stuff").map { user =>
+      Ok(views.html.loginStuff(user))
+    }.getOrElse {
+      Unauthorized("NEIN")
+    }
   }
 
   /**
-    * Shows the view for a registered User
+    * User logout
+    *
+    * @return the index page
     */
-  def loginStuff(username: String): Action[AnyContent] = Action {
-    Ok(views.html.loginStuff(username))
+
+  def logout: Action[AnyContent] = Action {
+    Ok(views.html.index(loginForm)).withNewSession
   }
+
   /**
     * Search a User
     *
     * @return page for registered User
     */
-def showUser: Action[AnyContent] = Action { implicit request =>
-  loginForm.bindFromRequest.fold(
-    formWithErrors => {
-      BadRequest(views.html.index(controllers.LoginController.loginForm))
-    },
-    userData => {
-      val getUser = UserService.registeredUsers.find {
-        _.name == userData.name
-      }.headOption.get.name
-      val getRole = UserService.registeredUsers.find {
-        _.name == userData.name
-      }.headOption.get.admin
+  def searchUser: Action[AnyContent] = Action { implicit request =>
+    loginForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest(views.html.index(formWithErrors))
+      },
+      userData => {
+        val user = UserService.registeredUsers.find {
+          _.name == userData.name
+        }.head
 
-          if (getRole == "nein") {
-            Redirect(routes.LoginController.loginUser(getUser))
+        if (user.password == userData.password) {
+          if (user.admin == "nein") {
+            Redirect(routes.LoginController.loginUser()) withSession ("user" -> user.name)
           } else {
-            Redirect(routes.LoginController.loginStuff(getUser))
+            Redirect(routes.LoginController.loginStuff()) withSession ("stuff" -> user.name)
           }
-    })
-}
+        } else Redirect(routes.Application.index())
+
+
+      }
+    )
+  }
+
+
 }

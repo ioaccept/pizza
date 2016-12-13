@@ -3,5 +3,14 @@
 @main(models.Company.name) {
 
     <h1>Willkommen @username bei @models.Company.name</h1>
+
+
+    <p>Login:
+        @helper.form(action = routes.LoginController.searchUser()) {
+            Name: <input type="text" name="Name"><br><br>
+        Passwort: <input type="password" name="Password"><br><br>
+        <input type="submit" value="Login" />
+    }
+    </p>
     
 }

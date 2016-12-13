@@ -1,8 +1,8 @@
-@(username: String, orders: List[models.Order], totalPrice: Option[BigDecimal], avgPrice: Option[BigDecimal])
+@(users: List[models.User], orders: List[models.Order], totalPrice: Option[BigDecimal], avgPrice: Option[BigDecimal])
 
 @main(models.Company.name) {
 
-    <h1>Bestllungen von @username bei @models.Company.name</h1>
+    <h1>Bestllungen bei @models.Company.name</h1>
 
     <p>Bestellübersicht</p>
 
@@ -18,7 +18,7 @@
         </tr>
         @for(order <- orders) {
             <tr>
-                <td>@order.orderName</td>
+              <td><a href="/userOrders?username=@order.orderName">@order.orderName</a></td>
                 <td>@order.orderItem</td>
                 <td>@order.orderExtras</td>
                 <td>@order.orderQuantity</td>
@@ -35,6 +35,7 @@
             <td></td>
             <td>Gesamt</td>
         </tr>
+
             <tr>
                 <td></td>
                 <td></td>

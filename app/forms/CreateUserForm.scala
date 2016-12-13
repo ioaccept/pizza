@@ -1,7 +1,11 @@
 package forms
 
+
 /**
- * Form containing data to create a user.
- * @param name name of the user.
- */
-case class CreateUserForm(name: String)
+  * Form containing data to create a user.
+  *
+  * @param name username
+  * @param distance
+  * @param password
+  */
+case class CreateUserForm(name: String, password: String, distance: Int, admin: String)

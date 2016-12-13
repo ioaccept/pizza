@@ -8,12 +8,13 @@
     <h1>Willkommen bei @models.Company.name</h1>
 
     <p>Login:
-        @helper.form(action = routes.LoginController.showUser()) {
-            @helper.inputText(loginForm("Name"))
+        @helper.form(action = routes.LoginController.searchUser()) {
+            Name: <input type="text" name="Name"><br><br>
+            Passwort: <input type="password" name="Password"><br><br>
             <input type="submit" value="Login" />
         }
     </p>
-    <p><a href="/showUsers">Registrierte Benutzer</a></p>
 
     <p><a href="/registerUser">Registriere dich</a></p>
+
 }

@@ -43,13 +43,17 @@
 
             <select name="Extras">
             @for(extra <- extras) {
-                <option value="@extra.name">@extra.name</option>
+                <option>@extra.name</option>
             }
             </select><br><br>
-            Extramenge: <input type="number" name="ExtrasQuantity" value="0" min="0"> <br><br>
-
             <input type="submit" value="Bestellen" />
         }
     </p>
-    <p><a href="/myOrder?username=@username">Meine Bestellungen</a></p>
+
+    <p>Meine Bestellungen
+        @helper.form(action = routes.OrderController.myOrders) {
+            <input type="submit" value="Bestellungen" />
+        }
+    </p>
+    <p><a href="/logout">Logout</a></p>
 }
