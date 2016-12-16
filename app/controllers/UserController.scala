@@ -4,7 +4,8 @@ import play.api.mvc.{Action, AnyContent, Controller}
 import play.api.data.Form
 import play.api.data.Forms._
 import forms.CreateUserForm
-import services.UserService
+import models.User
+import services.{OrderService, UserService}
 
 
 /**
@@ -37,15 +38,17 @@ object UserController extends Controller {
         BadRequest(views.html.register(formWithErrors))
       },
       userData => {
-        val user = UserService.registeredUsers.find {
-          _.name == userData.name
-        }.isDefined
+        val user = UserService.registeredUsers.exists(_.name == userData.name)
         if (user) {
           Redirect(routes.Application.index())
         } else {
-          val newUser = services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin)
-          Redirect(routes.UserController.welcomeUser(newUser.name)).
-            flashing("success" -> "User saved!")
+          if (request.session.get("staff").isDefined) {
+            services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin)
+            Redirect(routes.UserController.showUsers()).flashing("success" -> "User saved!")
+          } else {
+            val newUser = services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin)
+            Redirect(routes.UserController.welcomeUser(newUser.name)).flashing("success" -> "User saved!")
+          }
         }
       })
   }
@@ -61,10 +64,61 @@ object UserController extends Controller {
         BadRequest("NEIN")
       },
       userData => {
-        val changeUser = services.UserService.changeUser(userData.name, userData.password, userData.distance, userData.admin)
-        Redirect(routes.UserController.welcomeUser(changeUser.name)).
-          flashing("success" -> "User saved!")
+        val user = UserService.registeredUsers.exists(_.name == userData.name)
+
+        if (user) {
+          val user = UserService.registeredUsers.find(
+            _.name == userData.name
+          ).head
+          val changeUser = new User(user.id, userData.name, userData.password, userData.distance, userData.admin)
+          services.UserService.changeUser(changeUser)
+          Redirect(routes.UserController.showUsers()).
+            flashing("success" -> "User data changed!")
+        } else {
+          Redirect(routes.UserController.showUsers).flashing("error" -> "User data not changed!")
+        }
       })
+  }
+
+  /**
+    * Delete a User from System
+    *
+    * @return ???????????????Page
+    */
+  def deleteUser: Action[AnyContent] = Action { implicit request =>
+    userForm.bindFromRequest.fold(
+      formWithErrors => {
+        BadRequest("NEIN")
+      },
+      userData => {
+        val user = UserService.registeredUsers.exists(_.name == userData.name)
+        if (user) {
+          val user = UserService.registeredUsers.find(
+            _.name == userData.name
+          ).head
+          val orderByUser = OrderService.showAllOrders.exists(_.userId == user.id)
+          if (orderByUser) {
+            UserService.rmUser(user.id)
+            Redirect(routes.UserController.showUsers).flashing("success" -> "User deleted!")
+          } else {
+            Redirect(routes.UserController.showUsers).flashing("error" -> "User not deleted!")
+          }
+        } else {
+          Redirect(routes.UserController.showUsers).flashing("error" -> "User not deleted!")
+        }
+      }
+    )
+  }
+
+  /**
+    * List all users currently available in the system.
+    */
+  def showUsers: Action[AnyContent] = Action { request =>
+    request.session.get("staff").map { user =>
+      Ok(views.html.customer(UserService.registeredUsers, controllers.UserController.userForm))
+    }.getOrElse {
+      Unauthorized("NEIN")
+    }
   }
 
   /**
@@ -82,16 +136,5 @@ object UserController extends Controller {
 
   def registerUser: Action[AnyContent] = Action {
     Ok(views.html.register(controllers.UserController.userForm))
-  }
-
-  /**
-    * List all users currently available in the system.
-    */
-  def showUsers: Action[AnyContent] = Action { request =>
-    request.session.get("stuff").map { user =>
-      Ok(views.html.customer(UserService.registeredUsers, controllers.UserController.userForm))
-    }.getOrElse {
-      Unauthorized("NEIN")
-    }
   }
 }

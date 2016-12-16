@@ -31,25 +31,29 @@ object LoginController extends Controller {
     * @return the view for registerd User
     */
   def loginUser: Action[AnyContent] = Action { request =>
-    request.session.get("user").map { user =>
-      Ok(views.html.loginUser(user, ItemService.showItem, ExtrasService.showExtras, controllers.OrderController.orderForm))
-    }.getOrElse {
+    val connected = request.session.get("customer").isDefined
+    if (connected) {
+    val user = User(request.session.get("id").get.toLong, request.session.get("user").get.toString, null, request.session.get("distance").get.toLong, null)
+    Ok(views.html.loginUser(user, ItemService.showItem, ExtrasService.showExtras, controllers.OrderController.orderForm))
+  } else {
       Unauthorized("NEIN")
     }
   }
 
-  /**
-    * Show the view for registerd Stuff
-    *
-    * @return the view for registerd Stuff
-    */
-  def loginStuff: Action[AnyContent] = Action { request =>
-    request.session.get("stuff").map { user =>
-      Ok(views.html.loginStuff(user))
-    }.getOrElse {
-      Unauthorized("NEIN")
-    }
+/**
+  * Show the view for registerd Stuff
+  *
+  * @return the view for registerd Stuff
+  */
+def loginStaff: Action[AnyContent] = Action { request =>
+  val connected = request.session.get("staff").isDefined
+  if (connected) {
+    val user = User(request.session.get("id").get.toLong, request.session.get("user").get.toString, null, null , null)
+    Ok(views.html.loginStaff(user))
+  } else {
+    Unauthorized("NEIN")
   }
+}
 
   /**
     * User logout
@@ -58,36 +62,41 @@ object LoginController extends Controller {
     */
 
   def logout: Action[AnyContent] = Action {
-    Ok(views.html.index(loginForm)).withNewSession
-  }
+  Ok (views.html.index (loginForm) ).withNewSession
+}
 
   /**
     * Search a User
     *
     * @return page for registered User
     */
-  def searchUser: Action[AnyContent] = Action { implicit request =>
-    loginForm.bindFromRequest.fold(
-      formWithErrors => {
-        BadRequest(views.html.index(formWithErrors))
-      },
-      userData => {
-        val user = UserService.registeredUsers.find {
-          _.name == userData.name
-        }.head
+  def searchUser: Action[AnyContent] = Action {
+  implicit request =>
+  loginForm.bindFromRequest.fold (
+  formWithErrors => {
+  BadRequest (views.html.index (formWithErrors) )
+},
+  userData => {
+  val exists = UserService.registeredUsers.exists(_.name == userData.name)
 
-        if (user.password == userData.password) {
-          if (user.admin == "nein") {
-            Redirect(routes.LoginController.loginUser()) withSession ("user" -> user.name)
-          } else {
-            Redirect(routes.LoginController.loginStuff()) withSession ("stuff" -> user.name)
-          }
-        } else Redirect(routes.Application.index())
+  if (exists) {
+  val user = UserService.registeredUsers.find {
+  _.name == userData.name
+}.head
 
+  if (user.password == userData.password) {
+  if (user.admin == "nein") {
+  Redirect (routes.LoginController.loginUser () ) withSession ("id" -> user.id.toString, "user" -> user.name, "distance" -> user.distance.toString, "customer" -> "yes")
+} else {
+  Redirect (routes.LoginController.loginStaff () ) withSession ("id" -> user.id.toString, "user" -> user.name, "staff" -> "yes")
+}
+} else Redirect (routes.Application.index () )
 
-      }
-    )
-  }
+} else Redirect (routes.Application.index () )
+
+}
+  )
+}
 
 
 }

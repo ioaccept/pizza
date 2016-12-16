@@ -10,30 +10,32 @@ GET         /welcomeUser         controllers.UserController.welcomeUser(username
 GET         /registerUser        controllers.UserController.registerUser
 GET         /customers           controllers.UserController.showUsers
 POST        /changeCustomer      controllers.UserController.changeUser
-GET         /orders              controllers.OrderController.allOrders
-GET         /userOrders          controllers.OrderController.userOrders(username)
-
+POST        /deleteCustomer      controllers.UserController.deleteUser
 
 POST        /showUser            controllers.LoginController.searchUser
-
-
 GET         /loginUser           controllers.LoginController.loginUser
-GET         /loginStuff          controllers.LoginController.loginStuff
-
+GET         /loginStaff          controllers.LoginController.loginStaff
 GET         /logout              controllers.LoginController.logout
 
-POST        /addOrder            controllers.OrderController.addOrder(username)
+POST        /addOrder            controllers.OrderController.addOrder
 
 GET         /myOrder             controllers.OrderController.myOrders
-POST        /myOrder             controllers.OrderController.myOrders
+
+GET         /userOrders          controllers.OrderController.userOrders(username)
+GET         /orders              controllers.OrderController.allOrders
 
 GET         /range               controllers.ItemController.showItem
+POST        /addItem             controllers.ItemController.addItem
+POST        /deleteItem          controllers.ItemController.deleteItem
+POST        /changeItem          controllers.ItemController.changeItem
+
+
 
 
 # REST API
 GET         /api                 rest.Api.api
 GET         /api/users           rest.Users.users
-GET         /api/user/:id        rest.Users.user(id: Long)
+GET         /api/user/:name        rest.Users.user(name: String)
 POST        /api/user            rest.Users.addUser
 DELETE      /api/user/:id        rest.Users.rmUser(id: Long)
 

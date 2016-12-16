@@ -1,4 +1,4 @@
-@(items: List[models.Item], extras: List[models.Extras])
+@(items: List[models.Item], extras: List[models.Extras], categorys: List[models.Category])
 
 @main(models.Company.name) {
 
@@ -10,7 +10,6 @@
             <th>Preis pro Einheit</th>
         </tr>
         @for(item <- items) {
-
             <tr>
                 <td>@item.catName</td>
                 <td>@item.name</td>
@@ -18,7 +17,6 @@
             </tr>
         }
     </table>
-
 
     <table>
         <th>Extras</th>
@@ -30,4 +28,50 @@
             </tr>
         }
     </table>
+    <p>Produktänderung:
+        @helper.form(action = routes.ItemController.changeItem()) {
+            <select name="Name">
+            @for(item <- items) {
+                <option>@item.name</option>
+            }
+            </select>
+            <br>
+            <br>
+            <select name="Category">
+            @for(category <- categorys) {
+                <option value="@category.id">@category.name</option>
+            }</select>
+                <br>
+            <br>
+            Preis<input type="number" name="Price" min="0">
+            <br>
+            <br>
+            <input type="submit" value="Speichern" />
+        }
+    </p>
+    <p>Produkt hinzufügen:
+        @helper.form(action = routes.ItemController.addItem()) {
+            Produktname:<input type="text" name="Name" ><br><br>
+        <select name="Category">
+        @for(category <- categorys) {
+            <option value="@category.id">@category.name</option>
+        }</select>
+        <br>
+        <br>
+        Preis<input type="number" name="Price" min="0" ><br><br>
+        <br>
+        <br>
+        <input type="submit" value="Speichern" />
+    }
+    </p>
+    <p>Produkt löschen:
+        @helper.form(action = routes.ItemController.deleteItem()) {
+            Produktname:<input type="text" name="Name" ><br><br>
+        <input type="hidden" name="Category" value="1"><br><br>
+        <input type="hidden" name="Price" value="1" ><br><br>
+        <br>
+        <br>
+        <input type="submit" value="Speichern" />
+    }
+    </p>
 }

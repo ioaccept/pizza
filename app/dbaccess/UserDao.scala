@@ -36,17 +36,17 @@ trait UserDaoT {
     * @param changeUser the changeUser object to be changed
     * @return the changed User
     */
-  def changeUser(changeUser: ChangeUser): ChangeUser = {
+  def changeUser(changeUser: User): User = {
     DB.withConnection { implicit c =>
       val change =
-        SQL("update Users SET password = ({password}), distance = ({distance}), admin = ({admin}) where name = ({name})").on(
-          'password -> changeUser.password, 'distance -> changeUser.distance, 'admin -> changeUser.admin, 'name -> changeUser.name).executeUpdate()
+        SQL("update Users SET password = ({password}), distance = ({distance}), admin = ({admin}) where id = ({id})").on(
+          'id -> changeUser.id, 'password -> changeUser.password, 'distance -> changeUser.distance, 'admin -> changeUser.admin, 'name -> changeUser.name).executeUpdate()
     }
     changeUser
   }
 
   /**
-    * Removes a user by id from the database.
+    * Removes a user by name from the database.
     *
     * @param id the users id
     * @return a boolean success flag

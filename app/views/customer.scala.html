@@ -50,5 +50,17 @@
             <input type="submit" value="Speichern" />
         }
     </p>
-
+    <p>Kundenlöschen:
+    @helper.form(action = routes.UserController.deleteUser()) {
+        <select name="Name">
+        @for(user <- users) {
+            <option>@user.name</option>
+        }
+        </select>
+        <input type="hidden" name="Password" value="1">
+        <input type="hidden" name="Distance" value="1">
+        <input type="hidden" name="Admin" value="Ja">
+        <input type="submit" value="Löschen" />
+    </p>
+}
 }
