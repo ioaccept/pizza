@@ -1,0 +1,23 @@
+@(level: String)
+
+@level match {
+
+    case "success" => {
+        <p class="success">
+        Super
+        </p>
+    }
+
+    case "warning" => {
+        <p class="warning">
+        Warn
+        </p>
+    }
+
+    case "error" => {
+        <p class="error">
+        Scheiße
+        </p>
+    }
+
+}

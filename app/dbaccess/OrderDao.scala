@@ -1,11 +1,10 @@
 package dbaccess
 
-import java.util.Date
-
 import anorm.SQL
 import play.api.Play.current
 import play.api.db.DB
-import models.Order
+import models.{Order}
+
 
 /**
   * Data access object for user related operations.
@@ -23,10 +22,8 @@ trait OrderDaoT {
   def addOrder(order: Order): Order = {
     DB.withConnection { implicit c =>
       val orderid: Option[Long] =
-        SQL("insert into Orders(userId, distance, item, extras, quantity, size, price, ordertime, time) " +
-          "values (({userId}), ({distance}), ({item}), ({extras}), ({quantity}), ({size}), ({price}), ({ordertime}), CURRENT_TIMESTAMP)").on(
-          'userId -> order.userId, 'distance -> order.orderDistance, 'item -> order.orderItem, 'extras -> order.orderExtras, 'quantity -> order.orderQuantity,
-          'size -> order.orderSize, 'price -> order.orderPrice, 'ordertime -> order.delivery).executeInsert()
+        SQL("insert into Orders(name, item, extras, quantity, size, price, time) values (({name}), ({item}), ({extras}), ({quantity}), ({size}), ({price}), ({time}))").on(
+          'name -> order.orderName, 'item -> order.orderItem, 'extras -> order.orderExtras, 'quantity -> order.orderQuantity, 'size -> order.orderSize, 'price -> order.orderPrice, 'time -> order.time).executeInsert()
       order.id = orderid.get
     }
     order
@@ -35,16 +32,15 @@ trait OrderDaoT {
   /**
     * Show all Orders from User
     *
-    * @param userId
+    * @param username
     * @return all Orders from User
     */
-  def showOrders(userId: Long): List[Order] = {
+  def showOrders(username: String): List[Order] = {
     DB.withConnection { implicit c =>
-      val selectOrder = SQL("Select * from Orders, Users where Users.id = userId AND userId = ({userId}) ").on('userId -> userId)
+      val selectOrder = SQL("Select * from Orders where name = ({name})").on('name -> username)
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val orders = selectOrder().map(row => Order(row[Long]("id"), row[BigDecimal]("userId"), row[String]("name"), row[BigDecimal]("distance"),
-        row[String]("item"), row[String]("extras"), row[BigDecimal]("price"), row[BigDecimal]("quantity"), row[BigDecimal]("size"), row[BigDecimal]("price"),
-        row[BigDecimal]("ordertime"), row[Date]("time"))).toList
+      val orders = selectOrder().map(row => Order(row[Long]("id"), row[String]("name"), row[String]("item"), row[String]("extras"),
+        row[BigDecimal]("quantity"), row[BigDecimal]("size"), row[BigDecimal]("price"), row[BigDecimal]("time"))).toList
       orders
     }
   }
@@ -56,11 +52,10 @@ trait OrderDaoT {
     */
   def showAllOrders: List[Order] = {
     DB.withConnection { implicit c =>
-      val selectOrder = SQL("Select * from Orders, Users where Users.id = userId Order by userId")
+      val selectOrder = SQL("Select * from Orders Order by name")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val orders = selectOrder().map(row => Order(row[Long]("id"), row[BigDecimal]("userId"), row[String]("name"), row[BigDecimal]("distance"),
-        row[String]("item"), row[String]("extras"), row[BigDecimal]("price"), row[BigDecimal]("quantity"), row[BigDecimal]("size"), row[BigDecimal]("price"),
-        row[BigDecimal]("ordertime"), row[Date]("time"))).toList
+      val orders = selectOrder().map(row => Order(row[Long]("id"), row[String]("name"), row[String]("item"), row[String]("extras"),
+        row[BigDecimal]("quantity"), row[BigDecimal]("size"), row[BigDecimal]("price"), row[BigDecimal]("time"))).toList
       orders
     }
   }
@@ -68,12 +63,12 @@ trait OrderDaoT {
   /**
     * Show the total turnover from user
     *
-    * @param userId
+    * @param username
     * @return total turnover
     */
-  def showTotalPrice(userId: Long): Option[BigDecimal] = {
+  def showTotalPrice(username: String): Option[BigDecimal] = {
     DB.withConnection { implicit c =>
-      val selectPrice = SQL("Select SUM(price) from Orders where userId = ({userId})").on('userId -> userId).apply.headOption
+      val selectPrice = SQL("Select SUM(price) from Orders where name = ({name})").on('name -> username).apply.headOption
       selectPrice match {
         case Some(row) => Some(row[BigDecimal]("SUM(price)"))
         case None => None
@@ -99,12 +94,12 @@ trait OrderDaoT {
   /**
     * Show the average turnover from user
     *
-    * @param userId
+    * @param username
     * @return average turnover
     */
-  def showAVGPrice(userId: Long): Option[BigDecimal] = {
+  def showAVGPrice(username: String): Option[BigDecimal] = {
     DB.withConnection { implicit c =>
-      val selectPrice = SQL("Select AVG(price) from Orders where userId = ({userId})").on('userId -> userId).apply.headOption
+      val selectPrice = SQL("Select AVG(price) from Orders where name = ({name})").on('name -> username).apply.headOption
       selectPrice match {
         case Some(row) => Some(row[BigDecimal]("AVG(price)"))
         case None => None
