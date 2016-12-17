@@ -13,7 +13,7 @@ object Users extends Controller {
   private case class HateoasUser(user: User, url: String)
 
   private def mkHateoasUser(user: User)(implicit request: RequestHeader): HateoasUser = {
-    val url = routes.Users.user(user.id).absoluteURL()
+    val url = routes.Users.user(user.name).absoluteURL()
     HateoasUser(user, url)
   }
 
@@ -71,12 +71,12 @@ object Users extends Controller {
    * {{{
    * curl --include http://localhost:9000/api/user/1
    * }}}
-   * @param id user id.
+   * @param name user name
    * @return user info in a JSON representation.
    */
-  def user(id: Long): Action[AnyContent] = Action { implicit request =>
+  def user(name: String): Action[AnyContent] = Action { implicit request =>
     UserService.registeredUsers.find {
-      _.id == id
+      _.name == name
     }.headOption.map { user =>
       Ok(Json.toJson(mkHateoasUser(user)))
     }.getOrElse(NotFound)
@@ -102,7 +102,7 @@ object Users extends Controller {
       },
       username => {
         Ok(Json.obj("status" -> "OK",
-          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name, username.name, 5, username.name))))) // Noch ändern wenn gebraucht
+          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name, username.name, 5, false))))) // Noch ändern wenn gebraucht
       }
     )
   }

@@ -13,42 +13,78 @@
     </ul>
     <p>Kunden hinzufügen:
         @helper.form(action = routes.UserController.addUser()) {
-            Username:<input type="text" name="Name" ><br><br>
-        Passwort:<input type="password" name="Password"><br><br>
-        Distanz<input type="number" name="Distance" min="1" max="20"><br><br>
-        <select name="Admin">
-            <option value="ja">Ja</option>
-            <option value="nein">Nein</option>
-        </select>
-        <br>
-        <br>
-        <input type="submit" value="Speichern" />
-    }
-    </p>
-
-    <p>Kundenänderung:
-        @helper.form(action = routes.UserController.changeUser()) {
-            <select name="Name">
-            @for(user <- users) {
-                <option>@user.name</option>
-            }
-            </select>
+            <label>
+                Username:<input type="text" name="Name"><br><br>
+            </label>
+            <label>
+                Passwort: <input type="password" name="Password">
+            </label>
             <br>
             <br>
-            Passwort:<input type="password" name="Password">
+            <label>
+                Distanz: <input type="number" name="Distance" min="1" max="20">
+            </label>
             <br>
             <br>
-            Distanz<input type="number" name="Distance" min="1" max="20">
-            <br>
-            <br>
-            <select name="Admin">
-                <option value="ja">Ja</option>
-                <option value="nein">Nein</option>
-            </select>
+            <label>
+                Ja: <input type="radio" name="Admin" value="true" checked>
+            </label>
+            <label>
+                Nein: <input type="radio" name="Admin" value="false">
+            </label>
             <br>
             <br>
             <input type="submit" value="Speichern" />
         }
     </p>
 
+    <p>Kundenänderung:
+        @helper.form(action = routes.UserController.changeUser()) {
+            <label>
+                <select name="Name">
+                @for(user <- users) {
+                    <option>@user.name</option>
+                }
+                </select>
+            </label>
+            <br>
+            <br>
+            <label>
+                Passwort: <input type="password" name="Password">
+            </label>
+            <br>
+            <br>
+            <label>
+                Distanz<input type="number" name="Distance" min="1" max="20">
+            </label>
+            <br>
+            <br>
+            <label>
+                Ja: <input type="radio" name="Admin" value="true">
+            </label>
+            <label>
+                Nein: <input type="radio" name="Admin" value="false">
+            </label>
+            <br>
+            <br>
+            <input type="submit" value="Speichern" />
+        }
+    </p>
+    <p>Kundenlöschen:
+        @helper.form(action = routes.UserController.deleteUser()) {
+            <label>
+                <select name="Name">
+                @for(user <- users) {
+                    <option>@user.name</option>
+                }
+                </select>
+            </label>
+            <br>
+            <br>
+            <input type="hidden" name="Password" value="1">
+            <input type="hidden" name="Distance" value="1">
+            <input type="hidden" name="Admin" value="true">
+            <input type="submit" value="Löschen" />
+        </p>
+}
 }

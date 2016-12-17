@@ -15,16 +15,19 @@
             <th>Größe</th>
             <th>Preis</th>
             <th>Lieferzeit</th>
+            <th>Bestellzeit</th>
         </tr>
         @for(order <- orders) {
             <tr>
-                <td>@order.orderName</td>
+                <td>@order.userName</td>
                 <td>@order.orderItem</td>
                 <td>@order.orderExtras</td>
                 <td>@order.orderQuantity</td>
                 <td>@order.orderSize</td>
                 <td>@order.orderPrice €</td>
-                <td>@order.time min</td>
+                <td>@order.delivery min</td>
+                <td>@{var date = order.date.toString
+                f"$date%2.16s"}</td>
                 }
     </tr>
         <tr>
@@ -58,7 +61,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td>@avgPrice €</td>
+                <td>@{var avg = avgPrice.get
+                    f"$avg%2.2f"} €</td>
     </tr>
     </table>
 }

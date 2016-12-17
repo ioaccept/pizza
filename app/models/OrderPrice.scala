@@ -5,4 +5,4 @@ package models
   *
   * @param totalPrice
   */
-case class OrderPrice(var totalPrice: BigDecimal)
+case class OrderPrice(var totalPrice: (BigDecimal))

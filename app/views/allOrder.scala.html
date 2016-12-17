@@ -5,7 +5,6 @@
     <h1>Bestllungen bei @models.Company.name</h1>
 
     <p>Bestellübersicht</p>
-
     <table>
         <tr>
             <th>Name</th>
@@ -15,16 +14,21 @@
             <th>Größe</th>
             <th>Preis</th>
             <th>Lieferzeit</th>
+            <th>Bestellzeit</th>
         </tr>
         @for(order <- orders) {
             <tr>
-              <td><a href="/userOrders?username=@order.orderName">@order.orderName</a></td>
+                <td><a href="/userOrders?username=@order.userName">@order.userName</a></td>
                 <td>@order.orderItem</td>
                 <td>@order.orderExtras</td>
                 <td>@order.orderQuantity</td>
                 <td>@order.orderSize</td>
                 <td>@order.orderPrice €</td>
-                <td>@order.time min</td>
+                <td>@order.delivery min</td>
+                <td>@{
+                    var date = order.date.toString
+                    f"$date%2.16s"
+                }</td>
                 }
     </tr>
         <tr>
@@ -36,15 +40,15 @@
             <td>Gesamt</td>
         </tr>
 
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td>@totalPrice €</td>
 
-    </tr>
+        </tr>
         <tr>
             <td></td>
             <td></td>
@@ -53,13 +57,16 @@
             <td></td>
             <td>Durchschnitt </td>
         </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>@avgPrice €</td>
-    </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>@{
+                var avg = avgPrice.get
+                f"$avg%2.2f"
+            } €</td>
+        </tr>
     </table>
 }

@@ -8,4 +8,4 @@ package forms
   * @param distance
   * @param password
   */
-case class CreateUserForm(name: String, password: String, distance: Int, admin: String)
+case class CreateUserForm(name: String, password: String, distance: BigDecimal, admin: Boolean)

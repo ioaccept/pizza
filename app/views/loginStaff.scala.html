@@ -1,9 +1,9 @@
-@(username: String)
+@(user: User)
 
 @main(models.Company.name) {
 
-    <h1>Hallo Mitarbeiter @username bei @models.Company.name</h1>
-    <p><a href="/range">Unser Sortiment</a></p>
+    <h1>Hallo Mitarbeiter @user.name bei @models.Company.name</h1>
+    <p><a href="/menu">Unser Sortiment</a></p>
     <p><a href="/customers">Kunden Verwaltung</a></p>
     <p><a href="/orders">Bestellungen ansehen</a></p>
     <p><a href="/logout">Logout</a></p>

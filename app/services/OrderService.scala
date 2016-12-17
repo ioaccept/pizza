@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{OrderDao, OrderDaoT}
-import models.{Order, OrderPrice}
+import models.Order
 
 /**
   * Service class for order related operations.
@@ -15,29 +15,13 @@ trait OrderServiceT {
   /**
     * Add a new Order
     *
-    * @param orderName
-    * @param orderItem
-    * @param orderQuantity
-    * @param orderSize
-    * @param orderPrice
-    * @param time
     * @return a new Order
     */
-  def addOrder(orderName: String, orderItem: String, orderExtra: String, orderQuantity: BigDecimal, orderSize: BigDecimal, orderPrice: BigDecimal, time: BigDecimal): Order = {
+  def addOrder(myOrder: Order): Order = {
     // create User
-    val newOrder = Order(-1, orderName, orderItem, orderExtra, orderQuantity, orderSize, orderPrice, time)
+    val newOrder = myOrder
     // persist and return User
     orderDao.addOrder(newOrder)
-  }
-
-  /**
-    * Shows all Orders from User
-    *
-    * @param username username
-    * @return A list of all Orders from User
-    */
-  def showOrders(username: String): List[Order] = {
-    orderDao.showOrders(username)
   }
 
   /**
@@ -50,13 +34,23 @@ trait OrderServiceT {
   }
 
   /**
+    * Shows all Orders from User
+    *
+    * @param userId userId
+    * @return A list of all Orders from User
+    */
+  def showOrders(userId: Long): List[Order] = {
+    orderDao.showOrders(userId)
+  }
+
+  /**
     * Shows the total turnover from user
     *
-    * @param username
+    * @param userId
     * @return total turnover
     */
-  def showTotalPrice(username: String): Option[BigDecimal] = {
-    orderDao.showTotalPrice(username)
+  def showTotalPrice(userId: Long): Option[BigDecimal] = {
+    orderDao.showTotalPrice(userId)
   }
 
   /**
@@ -71,11 +65,11 @@ trait OrderServiceT {
   /**
     * Show the average turnover from User
     *
-    * @param username
+    * @param userId
     * @return average turnover
     */
-  def showAVGPrice(username: String): Option[BigDecimal] = {
-    orderDao.showAVGPrice(username)
+  def showAVGPrice(userId: Long): Option[BigDecimal] = {
+    orderDao.showAVGPrice(userId)
   }
 
   /**

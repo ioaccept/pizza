@@ -1,6 +1,7 @@
 package controllers
 
 import forms.CreateOrderForm
+import models.Order
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Action, AnyContent, Controller}
@@ -30,32 +31,36 @@ object OrderController extends Controller {
     *
     * @return page of all myOrder
     */
-  def addOrder(username: String): Action[AnyContent] = Action { implicit request =>
+  def addOrder: Action[AnyContent] = Action { implicit request =>
     orderForm.bindFromRequest.fold(
       formWithErrors => {
-        BadRequest("Falsch")
+        BadRequest("AddOrder")
       },
       userData => {
         val item = ItemService.showItem.find {
           _.name == userData.itemName
         }.head
-        val user = UserService.registeredUsers.find {
-          _.name == username
-        }.head
+
         val extras = ExtrasService.showExtras.find {
           _.name == userData.extras
         }.head
 
-        val time = user.distance * 2
-        val timePizza = user.distance * 2 + 10 * userData.itemQuantity
-        val orderPrice = userData.itemQuantity * userData.itemSize * item.price + extras.price
+
+        val myOrder = new Order(-1, request.session.get("id").get.toLong,
+          request.session.get("user").get, request.session.get("distance").get.toLong,
+          item.name, extras.name, extras.price, userData.itemQuantity, userData.itemSize,
+          item.price, null, null)
 
         if (item.catName == "Pizza") {
-          services.OrderService.addOrder(username, userData.itemName, userData.extras, userData.itemQuantity, userData.itemSize, orderPrice, timePizza)
+          myOrder.getOrderPriceWithPizza()
+          myOrder.deliveryTimeWithPizza
+          services.OrderService.addOrder(myOrder)
         } else {
-          services.OrderService.addOrder(username, userData.itemName, userData.extras, userData.itemQuantity, userData.itemSize, orderPrice, time)
+          myOrder.getOrderPrice()
+          myOrder.deliveryTime
+          services.OrderService.addOrder(myOrder)
         }
-        Redirect(routes.OrderController.myOrders()).withSession("user" -> username)
+        Redirect(routes.OrderController.myOrders())
       })
   }
 
@@ -65,18 +70,25 @@ object OrderController extends Controller {
     * @return a page of all Orders from User, when it failed return NEIN
     */
   def myOrders: Action[AnyContent] = Action { request =>
-    request.session.get("user").map { user =>
-      Ok(views.html.myOrder(user, OrderService.showOrders(user), OrderService.showTotalPrice(user), OrderService.showAVGPrice(user)))
-    }.getOrElse {
-      Unauthorized("NEIN")
+    val connected = request.session.get("customer").isDefined
+    if (connected) {
+      val userId = request.session.get("id").get.toLong
+      val userName = request.session.get("user").get.toString
+      Ok(views.html.myOrder(userName, OrderService.showOrders(userId), OrderService.showTotalPrice(userId), OrderService.showAVGPrice(userId)))
+    } else {
+      Unauthorized("myOrders")
     }
   }
 
   def userOrders(username: String): Action[AnyContent] = Action { request =>
-    request.session.get("stuff").map { user =>
-      Ok(views.html.myOrder(username, OrderService.showOrders(username), OrderService.showTotalPrice(username), OrderService.showAVGPrice(username)))
-    }.getOrElse {
-      Unauthorized("NEIN")
+    val connected = request.session.get("staff").isDefined
+    if (connected) {
+      val user = UserService.registeredUsers.find {
+        _.name == username
+      }.head
+      Ok(views.html.myOrder(username, OrderService.showOrders(user.id), OrderService.showTotalPrice(user.id), OrderService.showAVGPrice(user.id)))
+    } else {
+      Unauthorized("UserOrders")
     }
   }
 
@@ -86,10 +98,11 @@ object OrderController extends Controller {
     * @return all Orders
     */
   def allOrders: Action[AnyContent] = Action { request =>
-    request.session.get("stuff").map { user =>
+    val connected = request.session.get("staff").isDefined
+    if (connected) {
       Ok(views.html.allOrder(UserService.registeredUsers, OrderService.showAllOrders, OrderService.showTotalAllPrice, OrderService.showAVGAllPrice))
-    }.getOrElse {
-      Unauthorized("NEIN")
+    } else{
+      Unauthorized("AllOrders")
     }
   }
 }

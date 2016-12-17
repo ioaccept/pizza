@@ -1,8 +1,8 @@
-@(username: String, items: List[models.Item], extras: List[models.Extras], orderForm: Form[forms.CreateOrderForm])
+@(user: models.User, items: List[models.Item], extras: List[models.Extras], orderForm: Form[forms.CreateOrderForm])
 
 @main(models.Company.name) {
 
-    <h1>Hallo Kunde @username bei @models.Company.name</h1>
+    <h1>Hallo Kunde @user.name.toString bei @models.Company.name</h1>
     <table>
 
         <tr>
@@ -32,20 +32,35 @@
     </table>
 
     <p>Bestellen:
-        @helper.form(action = routes.OrderController.addOrder(username)) {
-            <select name="ItemName">
-            @for(item <- items) {
-                <option>@item.name</option>
-            }
-            </select><br><br>
-            Menge: <input type="number" name="ItemQuantity" min="1"> <br><br>
-            Größe: <input type="number" name="ItemSize" min="1"> <br><br>
-
+        @helper.form(action = routes.OrderController.addOrder) {
+            <label>
+                <select name="ItemName">
+                @for(item <- items) {
+                    <option>@item.name</option>
+                }
+                </select>
+            </label>
+            <br>
+            <br>
+            <label>
+                Menge: <input type="number" name="ItemQuantity" min="1">
+            </label>
+            <br>
+            <br>
+            <label>
+                Größe: <input type="number" name="ItemSize" min="1">
+            </label>
+            <br>
+            <br>
+            <label>
             <select name="Extras">
             @for(extra <- extras) {
                 <option>@extra.name</option>
             }
-            </select><br><br>
+            </select>
+            </label>
+            <br>
+            <br>
             <input type="submit" value="Bestellen" />
         }
     </p>

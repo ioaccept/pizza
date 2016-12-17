@@ -1,7 +1,7 @@
 package services
 
 import dbaccess.{UserDao, UserDaoT}
-import models.{ChangeUser, User}
+import models.User
 
 /**
   * Service class for user related operations.
@@ -19,10 +19,9 @@ trait UserServiceT {
     * @param password
     * @param distance
     * @param admin
-    *
     * @return a new User
     */
-  def addUser(name: String, password: String, distance: Int,admin: String): User = {
+  def addUser(name: String, password: String, distance: BigDecimal, admin: Boolean): User = {
     // create User
     val newUser = User(-1, name, password, distance, admin)
     // persist and return User
@@ -32,16 +31,11 @@ trait UserServiceT {
   /**
     * Change Data from existing User
     *
-    * @param name
-    * @param password
-    * @param distance
-    * @param admin
-    *
-    * @return
+    * @return User
     */
-  def changeUser(name: String, password: String, distance: Int, admin: String): ChangeUser = {
+  def changeUser(changeUser: User): User = {
     // change Userdata
-    val newUser = ChangeUser(name, password, distance, admin)
+    val newUser = changeUser
     // persist and return User
     userDao.changeUser(newUser)
   }
@@ -49,7 +43,7 @@ trait UserServiceT {
   /**
     * Removes a user by id from the system.
     *
-    * @param id users id.
+    * @param id users id
     * @return a boolean success flag.
     */
   def rmUser(id: Long): Boolean = userDao.rmUser(id)
@@ -62,7 +56,5 @@ trait UserServiceT {
   def registeredUsers: List[User] = {
     userDao.registeredUsers
   }
-
 }
-
-  object UserService extends UserServiceT
+object UserService extends UserServiceT

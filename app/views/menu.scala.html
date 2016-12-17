@@ -1,0 +1,116 @@
+@(items: List[models.Item], extras: List[models.Extras], categorys: List[models.Category])
+
+@main(models.Company.name) {
+
+    <h1>Unser Sortiment bei @models.Company.name</h1>
+    <table>
+        <tr>
+            <th>Kategorie</th>
+            <th>Name</th>
+            <th>Preis pro Einheit</th>
+            <th>Bestellbar</th>
+        </tr>
+        @for(item <- items) {
+            <tr>
+                <td>@item.catName</td>
+                <td>@item.name</td>
+                <td>@item.price €</td>
+                <td>@item.active</td>
+            </tr>
+        }
+    </table>
+
+    <table>
+        <th>Extras</th>
+        <th>Preis pro Extra</th>
+        @for(extra <- extras) {
+            <tr>
+                <td>@extra.name</td>
+                <td>@extra.price €</td>
+            </tr>
+        }
+    </table>
+    <p>Produktänderung:
+        @helper.form(action = routes.ItemController.changeItem()) {
+            <label>
+                Produktname: <select name="Name">
+            @for(item <- items) {
+                <option>@item.name</option>
+            }
+            </select>
+            </label>
+            <br>
+            <br>
+            <label>
+                Produkt Kategorie: <select name="Category">
+            @for(category <- categorys) {
+                <option value="@category.id">@category.name</option>
+            }</select>
+            </label>
+            <br>
+            <br>
+            <label>
+                Preis: <input type="number" name="Price" min="0" step="0.01">
+            </label>
+            <br>
+            <br>
+            <label>
+                Aktiv: Ja: <input type="radio" name="Active" value="true" checked>
+            </label>
+            <label>
+                Nein: <input type="radio" name="Active" value="false">
+            </label>
+            <br>
+            <br>
+            <input type="submit" value="Ändern" />
+        }
+    </p>
+    <p>Produkt hinzufügen:
+        @helper.form(action = routes.ItemController.addItem()) {
+            <label>
+                Produkt Kategorie: <select name="Category">
+            @for(category <- categorys) {
+                <option value="@category.id">@category.name</option>
+            }</select>
+            </label>
+            <br>
+            <br>
+            <label>
+                Produktname: <input type="text" name="Name" >
+            </label>
+            <br>
+            <br>
+            <label>
+                Preis: <input type="number" name="Price" min="0" step="0.01">
+            </label>
+            <br>
+            <br>
+            <label>
+                Aktiv: Ja: <input type="radio" name="Active" value="true" checked>
+            </label>
+            <label>
+                Nein: <input type="radio" name="Active" value="false">
+            </label>
+            <br>
+            <br>
+            <input type="submit" value="Hinzufügen" />
+        }
+    </p>
+    <p>Produkt löschen:
+        @helper.form(action = routes.ItemController.deleteItem()) {
+            <label>
+                Produktname: <select name="Name">
+            @for(item <- items) {
+                <option>@item.name</option>
+            }
+            </select>
+            </label>
+            <br>
+            <br>
+            <input type="hidden" name="Category" value="1">
+            <input type="hidden" name="Price" value="1" >
+            <input type="hidden" name="Active" value="false" >
+            <input type="submit" value="Löschen" />
+        }
+    </p>
+}

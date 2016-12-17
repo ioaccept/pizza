@@ -7,10 +7,14 @@
 
     <p>Login:
         @helper.form(action = routes.LoginController.searchUser()) {
-            Name: <input type="text" name="Name"><br><br>
-        Passwort: <input type="password" name="Password"><br><br>
-        <input type="submit" value="Login" />
-    }
+            <label>
+                Name: <input type="text" name="Name"><br><br>
+            </label>
+            <label>
+                Passwort: <input type="password" name="Password"><br><br>
+            </label>
+            <input type="submit" value="Login" />
+        }
     </p>
-    
+
 }
