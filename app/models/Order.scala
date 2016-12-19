@@ -44,6 +44,6 @@ case class Order(var id: Long, var userId: BigDecimal, var userName: String, var
     * Calculate the deliverytime from Order with Pizza
     */
   def deliveryTimeWithPizza: Unit = {
-    this delivery = orderDistance * 2 + 10 * orderQuantity
+    this.delivery = orderDistance * 2 + 10 * orderQuantity
   }
 }
