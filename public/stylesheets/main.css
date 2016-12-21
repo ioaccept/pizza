@@ -1,13 +1,23 @@
 body {
-    background-color: #d0e4fe;
+    background-image: url("pizza2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: orange;
+    background-attachment: fixed;
+    overflow: scroll;
+    font-style: italic;
+
 }
 
 h1 {
-    color: orange;
+    color: darkgreen;
+    font-style: italic;
+    background-color: aliceblue;
     text-align: center;
 }
 
 p {
     font-family: "Times New Roman";
-    font-size: 20px;
+    font-size: 30px;
 }
+
