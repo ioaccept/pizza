@@ -1,10 +1,7 @@
 @(user: models.User, items: List[models.Item], extras: List[models.Extras], orderForm: Form[forms.CreateOrderForm])
 
-@main(models.Company.name) {
-
-    <h1>Hallo Kunde @user.name.toString bei @models.Company.name</h1>
+@userView(models.Company.name) {
     <table>
-
         <tr>
             <th>Kategorie</th>
             <th>Name</th>
@@ -64,11 +61,4 @@
             <input type="submit" value="Bestellen" />
         }
     </p>
-
-    <p>Meine Bestellungen
-        @helper.form(action = routes.OrderController.myOrders) {
-            <input type="submit" value="Bestellungen" />
-        }
-    </p>
-    <p><a href="/logout">Logout</a></p>
 }

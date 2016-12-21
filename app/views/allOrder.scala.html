@@ -1,9 +1,6 @@
 @(users: List[models.User], orders: List[models.Order], totalPrice: Option[BigDecimal], avgPrice: Option[BigDecimal])
 
-@main(models.Company.name) {
-
-    <h1>Bestllungen bei @models.Company.name</h1>
-
+@staffView(models.Company.name) {
     <p>Bestellübersicht</p>
     <table>
         <tr>

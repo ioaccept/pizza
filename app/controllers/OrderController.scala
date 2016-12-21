@@ -86,7 +86,7 @@ object OrderController extends Controller {
       val user = UserService.registeredUsers.find {
         _.name == username
       }.head
-      Ok(views.html.myOrder(username, OrderService.showOrders(user.id), OrderService.showTotalPrice(user.id), OrderService.showAVGPrice(user.id)))
+      Ok(views.html.usersOrder(username, OrderService.showOrders(user.id), OrderService.showTotalPrice(user.id), OrderService.showAVGPrice(user.id)))
     } else {
       Unauthorized("UserOrders")
     }

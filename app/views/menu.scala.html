@@ -1,8 +1,6 @@
 @(items: List[models.Item], extras: List[models.Extras], categorys: List[models.Category])
 
-@main(models.Company.name) {
-
-    <h1>Unser Sortiment bei @models.Company.name</h1>
+@staffView(models.Company.name) {
     <table>
         <tr>
             <th>Kategorie</th>
@@ -15,7 +13,12 @@
                 <td>@item.catName</td>
                 <td>@item.name</td>
                 <td>@item.price €</td>
-                <td>@item.active</td>
+                <td>@{if (item.active) {
+                    "Aktiv"
+                } else {
+                    "Inaktiv"
+                }
+                }</td>
             </tr>
         }
     </table>

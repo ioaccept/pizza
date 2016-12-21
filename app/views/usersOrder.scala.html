@@ -1,6 +1,6 @@
 @(username: String, orders: List[models.Order], totalPrice: Option[BigDecimal], avgPrice: Option[BigDecimal])
 
-@userView(models.Company.name) {
+@staffView(models.Company.name) {
     <p>Bestellübersicht von @username</p>
     <table>
         <tr>

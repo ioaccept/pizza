@@ -1,16 +1,38 @@
 @(users: List[models.User], userForm: Form[forms.CreateUserForm])
 
-@main(models.Company.name) {
-
-    <h1>Kundenverwaltung bei @models.Company.name</h1>
+@staffView(models.Company.name) {
 
     <p>Zur Zeit sind folgende Benutzer registriert:</p>
 
-    <ul>
-    @for(user <- users) {
-        <li>@user.name, @user.password, @user.distance, @user.admin, @user.active</li>
-    }
-    </ul>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Password</th>
+            <th>Entfernung</th>
+            <th>Rolle</th>
+            <th>Status</th>
+        </tr>
+        @for(user <- users) {
+            <tr>
+                <td>@user.name</td>
+                <td>@user.password</td>
+                <td>@user.distance</td>
+                <td>@{if (user.admin) {
+                    "Mitarbeiter"
+                } else {
+                    "Kunde"
+                }
+                }</td>
+                <td>@{if (user.active) {
+                    "Aktiv"
+                } else {
+                    "Inaktiv"
+                }
+                }</td>
+                }
+    </tr>
+    </table>
+
     <p>Kunden hinzufügen:
         @helper.form(action = routes.UserController.addUser()) {
             <label>

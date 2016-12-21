@@ -14,7 +14,13 @@ object Application extends Controller {
     *
     * @return main web page
     */
-  def index: Action[AnyContent] = Action {
-    Ok(views.html.index(controllers.LoginController.loginForm))
+  def index: Action[AnyContent] = Action { request =>
+    if (request.session.get("customer").isDefined){
+      Redirect(routes.LoginController.loginUser())
+    } else if (request.session.get("staff")isDefined){
+      Redirect(routes.LoginController.loginStaff())
+    } else {
+      Ok(views.html.index(controllers.LoginController.loginForm))
+    }
   }
 }

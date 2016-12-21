@@ -1,0 +1,20 @@
+@(title: String)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
+        <script src="@routes.Assets.at("javascripts/hello.js")" type="text/javascript"></script>
+    </head>
+    <body>
+        <h1>@models.Company.name</h1>
+        <p><a href="/menu">Unser Sortiment</a>
+        <a href="/customers">Kunden Verwaltung</a>
+        <a href="/orders">Bestellungen ansehen</a>
+        <a href="/logout">Logout</a></p>
+    @content
+    </body>
+</html>
