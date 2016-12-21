@@ -21,9 +21,9 @@ trait UserServiceT {
     * @param admin
     * @return a new User
     */
-  def addUser(name: String, password: String, distance: BigDecimal, admin: Boolean): User = {
+  def addUser(name: String, password: String, distance: BigDecimal, admin: Boolean, active: Boolean): User = {
     // create User
-    val newUser = User(-1, name, password, distance, admin)
+    val newUser = User(-1, name, password, distance, admin, active)
     // persist and return User
     userDao.addUser(newUser)
   }
@@ -41,6 +41,17 @@ trait UserServiceT {
   }
 
   /**
+    * Disable existing User
+    *
+    * @return User
+    */
+  def disableUser(changeUser: User): User = {
+    // change Userdata
+    val disableUser = changeUser
+    // persist and return User
+    userDao.disableUser(disableUser)
+  }
+  /**
     * Removes a user by id from the system.
     *
     * @param id users id
@@ -57,4 +68,5 @@ trait UserServiceT {
     userDao.registeredUsers
   }
 }
+
 object UserService extends UserServiceT

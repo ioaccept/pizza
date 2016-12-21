@@ -3,10 +3,11 @@ package models
 /**
   * User entity.
   *
-  * @param id database id of the user.
-  * @param name name of the user.
+  * @param id       database id of the user.
+  * @param name     name of the user.
   * @param password password of the user
   * @param distance distance to company
-  * @param admin admin flag of user
+  * @param admin    admin flag of user
+  * @param active   active flag of user
   */
-case class User(var id: Long, var name: String, var password: String, var distance: BigDecimal, var admin: Boolean)
+case class User(var id: Long, var name: String, var password: String, var distance: BigDecimal, var admin: Boolean, var active: Boolean)

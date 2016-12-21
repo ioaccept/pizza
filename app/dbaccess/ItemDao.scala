@@ -31,6 +31,7 @@ trait ItemDaoT {
     }
     changeItem
   }
+
   /**
     * Removes a item by name from the database.
     *
@@ -71,18 +72,20 @@ trait ItemDaoT {
       items
     }
   }
+
   /**
     * Returns the price
     *
     * @return ???.
     */
-  def showPrice(itemName:String) : List[Item] = {
+  def showPrice(itemName: String): List[Item] = {
     DB.withConnection { implicit c =>
-      val selectItems = SQL("Select price From Items where name = ({name});")on('name -> itemName)
+      val selectItems = SQL("Select price From Items where name = ({name});") on ('name -> itemName)
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val items = selectItems().map(row => Item(row[Long]("Items.id"), row[String]("Cat.name"), row[String]("Items.name"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
       items
     }
   }
 }
+
 object ItemDao extends ItemDaoT

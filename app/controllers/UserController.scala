@@ -23,7 +23,8 @@ object UserController extends Controller {
       "Name" -> text,
       "Password" -> nonEmptyText,
       "Distance" -> bigDecimal,
-      "Admin" -> boolean
+      "Admin" -> boolean,
+      "Active" -> boolean
     )
     (CreateUserForm.apply)(CreateUserForm.unapply))
 
@@ -43,10 +44,10 @@ object UserController extends Controller {
           Redirect(routes.Application.index())
         } else {
           if (request.session.get("staff").isDefined) {
-            services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin)
+            services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin, userData.activ)
             Redirect(routes.UserController.showUsers()).flashing("success" -> "User saved!")
           } else {
-            val newUser = services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin)
+            val newUser = services.UserService.addUser(userData.name, userData.password, userData.distance, userData.admin, userData.activ)
             Redirect(routes.UserController.welcomeUser(newUser.name)).flashing("success" -> "User saved!")
           }
         }
@@ -70,7 +71,7 @@ object UserController extends Controller {
           val user = UserService.registeredUsers.find(
             _.name == userData.name
           ).head
-          val changeUser = new User(user.id, userData.name, userData.password, userData.distance, userData.admin)
+          val changeUser = new User(user.id, userData.name, userData.password, userData.distance, userData.admin, true)
           services.UserService.changeUser(changeUser)
           Redirect(routes.UserController.showUsers()).
             flashing("success" -> "User data changed!")
@@ -101,10 +102,14 @@ object UserController extends Controller {
             UserService.rmUser(user.id)
             Redirect(routes.UserController.showUsers).flashing("success" -> "User deleted!")
           } else {
+            val disableUser = UserService.registeredUsers.find(
+              _.name == userData.name
+            ).head
+            UserService.disableUser(disableUser)
             Redirect(routes.UserController.showUsers).flashing("error" -> "User not deleted!")
           }
         } else {
-          Redirect(routes.UserController.showUsers).flashing("error" -> "User not deleted!")
+          Redirect(routes.UserController.showUsers).flashing("error" -> "User not found!")
         }
       }
     )

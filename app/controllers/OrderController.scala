@@ -101,7 +101,7 @@ object OrderController extends Controller {
     val connected = request.session.get("staff").isDefined
     if (connected) {
       Ok(views.html.allOrder(UserService.registeredUsers, OrderService.showAllOrders, OrderService.showTotalAllPrice, OrderService.showAVGAllPrice))
-    } else{
+    } else {
       Unauthorized("AllOrders")
     }
   }

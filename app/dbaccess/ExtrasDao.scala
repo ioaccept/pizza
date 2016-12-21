@@ -27,4 +27,5 @@ trait ExtrasDaoT {
     }
   }
 }
+
 object ExtrasDao extends ExtrasDaoT

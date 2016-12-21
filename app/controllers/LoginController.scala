@@ -33,27 +33,27 @@ object LoginController extends Controller {
   def loginUser: Action[AnyContent] = Action { request =>
     val connected = request.session.get("customer").isDefined
     if (connected) {
-    val user = User(request.session.get("id").get.toLong, request.session.get("user").get.toString, null, request.session.get("distance").get.toLong, false)
-    Ok(views.html.loginUser(user, ItemService.showActiveItem, ExtrasService.showExtras, controllers.OrderController.orderForm))
-  } else {
+      val user = User(request.session.get("id").get.toLong, request.session.get("user").get.toString, null, request.session.get("distance").get.toLong, false, true)
+      Ok(views.html.loginUser(user, ItemService.showActiveItem, ExtrasService.showExtras, controllers.OrderController.orderForm))
+    } else {
       Unauthorized("LoginUser")
     }
   }
 
-/**
-  * Show the view for registerd Stuff
-  *
-  * @return the view for registerd Stuff
-  */
-def loginStaff: Action[AnyContent] = Action { request =>
-  val connected = request.session.get("staff").isDefined
-  if (connected) {
-    val user = User(request.session.get("id").get.toLong, request.session.get("user").get.toString, null, null , true)
-    Ok(views.html.loginStaff(user))
-  } else {
-    Unauthorized("LoginStaff")
+  /**
+    * Show the view for registerd Stuff
+    *
+    * @return the view for registerd Stuff
+    */
+  def loginStaff: Action[AnyContent] = Action { request =>
+    val connected = request.session.get("staff").isDefined
+    if (connected) {
+      val user = User(request.session.get("id").get.toLong, request.session.get("user").get.toString, null, null, true, true)
+      Ok(views.html.loginStaff(user))
+    } else {
+      Unauthorized("LoginStaff")
+    }
   }
-}
 
   /**
     * User logout
@@ -62,8 +62,8 @@ def loginStaff: Action[AnyContent] = Action { request =>
     */
 
   def logout: Action[AnyContent] = Action {
-  Ok (views.html.index (loginForm) ).withNewSession
-}
+    Ok(views.html.index(loginForm)).withNewSession
+  }
 
   /**
     * Search a User
@@ -71,32 +71,32 @@ def loginStaff: Action[AnyContent] = Action { request =>
     * @return page for registered User
     */
   def searchUser: Action[AnyContent] = Action {
-  implicit request =>
-  loginForm.bindFromRequest.fold (
-  formWithErrors => {
-  BadRequest (views.html.index (formWithErrors) )
-},
-  userData => {
-  val exists = UserService.registeredUsers.exists(_.name == userData.name)
+    implicit request =>
+      loginForm.bindFromRequest.fold(
+        formWithErrors => {
+          BadRequest(views.html.index(formWithErrors))
+        },
+        userData => {
+          val exists = UserService.registeredUsers.exists(_.name == userData.name)
 
-  if (exists) {
-  val user = UserService.registeredUsers.find {
-  _.name == userData.name
-}.head
+          if (exists) {
+            val user = UserService.registeredUsers.find {
+              _.name == userData.name
+            }.head
 
-  if (user.password == userData.password) {
-  if (!user.admin) {
-  Redirect (routes.LoginController.loginUser () ) withSession ("id" -> user.id.toString, "user" -> user.name, "distance" -> user.distance.toString, "customer" -> "yes")
-} else {
-  Redirect (routes.LoginController.loginStaff () ) withSession ("id" -> user.id.toString, "user" -> user.name, "staff" -> "yes")
-}
-} else Redirect (routes.Application.index () )
+            if (user.password == userData.password && user.active) {
+              if (!user.admin) {
+                Redirect(routes.LoginController.loginUser()) withSession("id" -> user.id.toString, "user" -> user.name, "distance" -> user.distance.toString, "customer" -> "yes")
+              } else {
+                Redirect(routes.LoginController.loginStaff()) withSession("id" -> user.id.toString, "user" -> user.name, "staff" -> "yes")
+              }
+            } else Redirect(routes.Application.index())
 
-} else Redirect (routes.Application.index () )
+          } else Redirect(routes.Application.index())
 
-}
-  )
-}
+        }
+      )
+  }
 
 
 }

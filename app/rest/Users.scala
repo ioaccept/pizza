@@ -102,7 +102,7 @@ object Users extends Controller {
       },
       username => {
         Ok(Json.obj("status" -> "OK",
-          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name, username.name, 5, false))))) // Noch ändern wenn gebraucht
+          "user" -> Json.toJson(mkHateoasUser(UserService.addUser(username.name, username.name, 5, false, true))))) // Noch ändern wenn gebraucht
       }
     )
   }

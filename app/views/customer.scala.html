@@ -8,7 +8,7 @@
 
     <ul>
     @for(user <- users) {
-        <li>@user.name, @user.password, @user.distance, @user.admin</li>
+        <li>@user.name, @user.password, @user.distance, @user.admin, @user.active</li>
     }
     </ul>
     <p>Kunden hinzufügen:
@@ -32,6 +32,7 @@
             <label>
                 Nein: <input type="radio" name="Admin" value="false">
             </label>
+            <input type="hidden" name="Active" value="true">
             <br>
             <br>
             <input type="submit" value="Speichern" />
@@ -64,6 +65,14 @@
             </label>
             <label>
                 Nein: <input type="radio" name="Admin" value="false">
+            </label>
+            <br>
+            <br>
+            <label>
+                Ja: <input type="radio" name="Active" value="true">
+            </label>
+            <label>
+                Nein: <input type="radio" name="Active" value="false">
             </label>
             <br>
             <br>

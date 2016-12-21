@@ -7,11 +7,12 @@ CREATE TABLE Users (
     name varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
     distance number(10),
-    admin boolean
+    admin boolean,
+    active boolean
 );
 
-INSERT INTO Users values (1, 'Padrone', 'Padrone', 10, true);
-INSERT INTO Users values (2, 'Emil', 'Emil', 5, false);
+INSERT INTO Users values (1, 'Padrone', 'Padrone', 10, true, true);
+INSERT INTO Users values (2, 'Emil', 'Emil', 5, false, true);
 
 # --- !Downs
  

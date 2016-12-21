@@ -1,4 +1,5 @@
 package dbaccess
+
 import anorm.SQL
 import play.api.Play.current
 import play.api.db.DB
@@ -26,4 +27,5 @@ trait CategoryDaoT {
     }
   }
 }
+
 object CategoryDao extends CategoryDaoT

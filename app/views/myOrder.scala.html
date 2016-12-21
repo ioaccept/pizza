@@ -26,8 +26,10 @@
                 <td>@order.orderSize</td>
                 <td>@order.orderPrice €</td>
                 <td>@order.delivery min</td>
-                <td>@{var date = order.date.toString
-                f"$date%2.16s"}</td>
+                <td>@{
+                    var date = order.date.toString
+                    f"$date%2.16s"
+                }</td>
                 }
     </tr>
         <tr>
@@ -38,15 +40,15 @@
             <td></td>
             <td>Gesamt</td>
         </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
             <td>@totalPrice €</td>
 
-    </tr>
+        </tr>
         <tr>
             <td></td>
             <td></td>
@@ -55,14 +57,16 @@
             <td></td>
             <td>Durchschnitt </td>
         </tr>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td>@{var avg = avgPrice.get
-                    f"$avg%2.2f"} €</td>
-    </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>@{
+                var avg = avgPrice.get
+                f"$avg%2.2f"
+            } €</td>
+        </tr>
     </table>
 }
