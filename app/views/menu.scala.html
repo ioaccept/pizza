@@ -22,7 +22,7 @@
             </tr>
         }
     </table>
-
+<br>
     <table>
         <th>Extras</th>
         <th>Preis pro Extra</th>
@@ -33,7 +33,10 @@
             </tr>
         }
     </table>
-    <p>Produktänderung:
+    <div id="Box">
+        <label>
+    Produktänderung:
+        </label>
         @helper.form(action = routes.ItemController.changeItem()) {
             <label>
                 Produktname: <select name="Name">
@@ -67,8 +70,12 @@
             <br>
             <input type="submit" value="Ändern" />
         }
-    </p>
-    <p>Produkt hinzufügen:
+
+    </div>
+    <div id="Box">
+        <label>
+    Produkt hinzufügen:
+        </label>
         @helper.form(action = routes.ItemController.addItem()) {
             <label>
                 Produkt Kategorie: <select name="Category">
@@ -98,9 +105,13 @@
             <br>
             <input type="submit" value="Hinzufügen" />
         }
-    </p>
-    <p>Produkt löschen:
-        @helper.form(action = routes.ItemController.deleteItem()) {
+
+    </div>
+    <div id="Box">
+        <label>
+        Produkt löschen:
+        </label
+            @helper.form(action = routes.ItemController.deleteItem()) {
             <label>
                 Produktname: <select name="Name">
             @for(item <- items) {
@@ -115,5 +126,6 @@
             <input type="hidden" name="Active" value="false" >
             <input type="submit" value="Löschen" />
         }
-    </p>
+
+    </div>
 }

@@ -16,7 +16,7 @@
             </tr>
         }
     </table>
-
+<br>
     <table>
         <th>Extras</th>
         <th>Preis pro Extra</th>
@@ -27,10 +27,13 @@
             </tr>
         }
     </table>
-
-    <p>Bestellen:
+    <div id="Box">
+        <label>
+    Bestellen:
+        </label>
         @helper.form(action = routes.OrderController.addOrder) {
             <label>
+                Produkt:
                 <select name="ItemName">
                 @for(item <- items) {
                     <option>@item.name</option>
@@ -49,7 +52,7 @@
             </label>
             <br>
             <br>
-            <label>
+            <label> Extras:
                 <select name="Extras">
                 @for(extra <- extras) {
                     <option>@extra.name</option>
@@ -60,5 +63,6 @@
             <br>
             <input type="submit" value="Bestellen" />
         }
-    </p>
+
+    </div>
 }

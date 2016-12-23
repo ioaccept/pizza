@@ -11,10 +11,12 @@
     </head>
     <body>
         <h1>@models.Company.name</h1>
-        <p><a href="/menu">Unser Sortiment</a>
-        <a href="/customers">Kunden Verwaltung</a>
-        <a href="/orders">Bestellungen ansehen</a>
-        <a href="/logout">Logout</a></p>
-    @content
+        <div id="LinkTop">
+            <a href="/menu">Unser Sortiment</a>
+            <a href="/customers">Kunden Verwaltung</a>
+            <a href="/orders">Bestellungen ansehen</a>
+            <a href="/logout">Logout</a>
+        </div>
+        @content
     </body>
 </html>

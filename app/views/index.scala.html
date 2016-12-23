@@ -6,7 +6,8 @@
 
     <h1>Willkommen bei @models.Company.name</h1>
 
-    <p>Login:
+    <div id="LoginBox">
+        <p>Login:
         @helper.form(action = routes.LoginController.searchUser()) {
             <label>
                 Name: <input type="text" name="Name"><br><br>
@@ -15,9 +16,9 @@
                 Passwort: <input type="password" name="Password"><br><br>
             </label>
             <input type="submit" value="Login" />
-        }
-    </p>
+        }</p>
+    </div>
 
-    <p><a href="/registerUser">Registriere dich</a></p>
+    <p id="RegisterLink"><a href="/registerUser">Registriere dich</a></p>
 
 }

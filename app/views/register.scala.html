@@ -4,8 +4,10 @@
 
     @main(models.Company.name) {
         <h1>Willkommen bei @models.Company.name</h1>
-
-        <p>Registrieren:
+<div id="Box">
+        <label>
+            Registrieren:
+        </label>
             @helper.form(action = routes.UserController.addUser()) {
                 <label>
                     Username: <input type="text" name="Name" required><br><br>
@@ -21,4 +23,5 @@
                 <input type="submit" value="Speichern" />
             }
         </p>
+</div>
     }

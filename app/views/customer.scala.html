@@ -32,8 +32,10 @@
                 }
     </tr>
     </table>
-
-    <p>Kunden hinzufügen:
+    <div id="Box">
+        <label>
+    Kunden hinzufügen:
+        </label>
         @helper.form(action = routes.UserController.addUser()) {
             <label>
                 Username:<input type="text" name="Name"><br><br>
@@ -59,9 +61,12 @@
             <br>
             <input type="submit" value="Speichern" />
         }
-    </p>
 
-    <p>Kundenänderung:
+</div>
+    <div id="Box">
+    <label>
+    Kundenänderung:
+        </label>
         @helper.form(action = routes.UserController.changeUser()) {
             <label>
                 <select name="Name">
@@ -100,8 +105,12 @@
             <br>
             <input type="submit" value="Speichern" />
         }
-    </p>
-    <p>Kundenlöschen:
+
+    </div>
+    <div id="Box">
+        <label>
+    Kundenlöschen:
+        </label>
         @helper.form(action = routes.UserController.deleteUser()) {
             <label>
                 <select name="Name">
@@ -116,6 +125,6 @@
             <input type="hidden" name="Distance" value="1">
             <input type="hidden" name="Admin" value="true">
             <input type="submit" value="Löschen" />
-        </p>
+    </div>
 }
 }
