@@ -6,17 +6,75 @@ body {
     background-attachment: fixed;
     overflow: scroll;
     font-style: italic;
+
 }
 
 h1 {
-    color: darkgreen;
+    color: white;
+    font-size: 75px;
     font-style: italic;
-    background-color: aliceblue;
+    background-color: hsla(120, 100%, 20%, 0.3);
     text-align: center;
 }
 
 p {
     font-family: "Times New Roman";
     font-size: 30px;
+    color: white;
+    text-align: center;
 }
 
+a:link, a:visited {
+    color: white;
+    padding: 14px 25px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+
+a:hover, a:active {
+    background-color: red;
+}
+
+label {
+    color: white;
+}
+
+table {
+    border-radius: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: hsla(0, 20%, 20%, 0.5);
+    color: white;
+    text-align: center;
+}
+
+#LinkTop {
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 25px;
+    background-color: hsla(120, 100%, 20%, 0.3);
+}
+
+#LoginBox {
+    border-radius: 20px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    background-color: hsla(0, 20%, 20%, 0.5);
+}
+
+#Box {
+    border-radius: 20px;
+    margin-top: 10px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+    background-color: hsla(0, 20%, 20%, 0.5);
+}
+
+#RegisterLink {
+    text-align: center;
+}
