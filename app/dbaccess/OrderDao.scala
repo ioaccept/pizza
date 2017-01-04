@@ -73,9 +73,9 @@ trait OrderDaoT {
     */
   def showTotalPrice(userId: Long): Option[BigDecimal] = {
     DB.withConnection { implicit c =>
-      val selectPrice = SQL("Select SUM(price) from Orders where userId = ({userId})").on('userId -> userId).apply.headOption
+      val selectPrice = SQL("Select NVL(SUM(price), 0) as price from Orders where userId = ({userId})").on('userId -> userId).apply.headOption
       selectPrice match {
-        case Some(row) => Some(row[BigDecimal]("SUM(price)"))
+        case Some(row) => Some(row[BigDecimal]("price"))
         case None => None
       }
     }
@@ -88,9 +88,9 @@ trait OrderDaoT {
     */
   def showTotalAllPrice: Option[BigDecimal] = {
     DB.withConnection { implicit c =>
-      val selectPrice = SQL("Select SUM(price) from Orders").apply.headOption
+      val selectPrice = SQL("Select NVL(SUM(price), 0) as price from Orders").apply.headOption
       selectPrice match {
-        case Some(row) => Some(row[BigDecimal]("SUM(price)"))
+        case Some(row) => Some(row[BigDecimal]("price"))
         case None => None
       }
     }
@@ -104,9 +104,9 @@ trait OrderDaoT {
     */
   def showAVGPrice(userId: Long): Option[BigDecimal] = {
     DB.withConnection { implicit c =>
-      val selectPrice = SQL("Select AVG(price) from Orders where userId = ({userId})").on('userId -> userId).apply.headOption
+      val selectPrice = SQL("Select NVL(AVG(price), 0) as price from Orders where userId = ({userId})").on('userId -> userId).apply.headOption
       selectPrice match {
-        case Some(row) => Some(row[BigDecimal]("AVG(price)"))
+        case Some(row) => Some(row[BigDecimal]("price"))
         case None => None
       }
     }
@@ -119,9 +119,9 @@ trait OrderDaoT {
     */
   def showAVGAllPrice: Option[BigDecimal] = {
     DB.withConnection { implicit c =>
-      val selectPrice = SQL("Select AVG(price) from Orders").apply.headOption
+      val selectPrice = SQL("Select NVL(AVG(price), 0) as price from Orders").apply.headOption
       selectPrice match {
-        case Some(row) => Some(row[BigDecimal]("AVG(price)"))
+        case Some(row) => Some(row[BigDecimal]("price"))
         case None => None
       }
     }
