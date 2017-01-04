@@ -35,7 +35,7 @@ trait ItemServiceT {
     * @param price
     * @return
     */
-  def changeItem(name: String, cat: Int, price: BigDecimal, active: Boolean): AddItem = {
+  def changeItem(name: String, cat: BigDecimal, price: BigDecimal, active: Boolean): AddItem = {
     // change Userdata
     val changeItem = AddItem(1, name, cat, price, active)
     // persist and return User
@@ -51,7 +51,16 @@ trait ItemServiceT {
   def rmItem(name: String): Boolean = itemDao.rmItem(name)
 
   /**
-    * Gets a list of all items.
+    * Gets a list of all items with Category ID
+    *
+    * @return list of users.
+    */
+  def allItem: List[AddItem] = {
+    itemDao.allItem
+  }
+
+  /**
+    * Gets a list of all items with CategoryName.
     *
     * @return list of users.
     */

@@ -83,10 +83,10 @@ object ItemController extends Controller {
           ItemService.rmItem(userData.name)
           Redirect(routes.ItemController.showItem()).flashing("success" -> "Item deleted!")
         } else {
-          val disableItem = ItemService.showItem.find(
+          val disableItem = ItemService.allItem.find(
             _.name == userData.name
           ).head
-          ItemService.changeItem(disableItem.name, disableItem.id.toInt, disableItem.price, false)
+          ItemService.changeItem(disableItem.name, disableItem.cat, disableItem.price, false)
           Redirect(routes.ItemController.showItem()).flashing("error" -> "Item not deleted!")
         }
       }

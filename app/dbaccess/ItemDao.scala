@@ -44,15 +44,27 @@ trait ItemDaoT {
       rowsCount > 0
     }
   }
-
   /**
-    * Returns a list of available items from the database.
+    * Returns a list of available items from the database with the Cat_Id.
+    *
+    * @return a list of items objects.
+    */
+  def allItem: List[AddItem] = {
+    DB.withConnection { implicit c =>
+      val selectItems = SQL("Select * From Items;")
+      // Transform the resulting Stream[Row] to a List[(String,String)]
+      val items = selectItems().map(row => AddItem(row[Long]("id"),  row[String]("name"), row[BigDecimal]("cat_id"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
+      items
+    }
+  }
+  /**
+    * Returns a list of available items from the database with CategoryName.
     *
     * @return a list of items objects.
     */
   def showItem: List[Item] = {
     DB.withConnection { implicit c =>
-      val selectItems = SQL("Select Items.id, Items.name, Items.cat_id, Items.price, Items.active, Cat.id, Cat.name From Items, Cat where Items.cat_id = Cat.id ;")
+      val selectItems = SQL("Select Items.id, Items.name, Items.cat_id, Items.price, Items.active, Cat.id, Cat.name From Items, Cat where Items.cat_id = Cat.id Order by Cat.name DESC;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val items = selectItems().map(row => Item(row[Long]("Items.id"), row[String]("Cat.name"), row[String]("Items.name"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
       items
@@ -60,27 +72,13 @@ trait ItemDaoT {
   }
 
   /**
-    * Returns a list of available items from the database.
+    * Returns a list of active items from the database.
     *
     * @return a list of items objects.
     */
   def showActiveItem: List[Item] = {
     DB.withConnection { implicit c =>
-      val selectItems = SQL("Select Items.id, Items.name, Items.cat_id, Items.price, Items.active, Cat.id, Cat.name From Items, Cat where Items.cat_id = Cat.id AND active = true;")
-      // Transform the resulting Stream[Row] to a List[(String,String)]
-      val items = selectItems().map(row => Item(row[Long]("Items.id"), row[String]("Cat.name"), row[String]("Items.name"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
-      items
-    }
-  }
-
-  /**
-    * Returns the price
-    *
-    * @return ???.
-    */
-  def showPrice(itemName: String): List[Item] = {
-    DB.withConnection { implicit c =>
-      val selectItems = SQL("Select price From Items where name = ({name});") on ('name -> itemName)
+      val selectItems = SQL("Select Items.id, Items.name, Items.cat_id, Items.price, Items.active, Cat.id, Cat.name From Items, Cat where Items.cat_id = Cat.id AND active = true Order by Cat.name DESC;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val items = selectItems().map(row => Item(row[Long]("Items.id"), row[String]("Cat.name"), row[String]("Items.name"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
       items
