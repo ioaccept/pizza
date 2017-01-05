@@ -56,7 +56,7 @@ trait OrderDaoT {
     */
   def showAllOrders: List[Order] = {
     DB.withConnection { implicit c =>
-      val selectOrder = SQL("Select * from Orders, Users where Users.id = userId Order by userId")
+      val selectOrder = SQL("Select * from Orders, Users where Users.id = userId")
       // Transform the resulting Stream[Row] to a List[(String,String)]
       val orders = selectOrder().map(row => Order(row[Long]("id"), row[BigDecimal]("userId"), row[String]("name"), row[BigDecimal]("distance"),
         row[String]("item"), row[String]("extras"), row[BigDecimal]("price"), row[BigDecimal]("quantity"), row[BigDecimal]("size"), row[BigDecimal]("price"),

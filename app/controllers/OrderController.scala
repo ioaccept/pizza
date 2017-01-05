@@ -37,7 +37,7 @@ object OrderController extends Controller {
         BadRequest("AddOrder")
       },
       userData => {
-        val item = ItemService.showItem.find {
+        val item = ItemService.showActiveItem.find {
           _.name == userData.itemName
         }.head
 
@@ -80,6 +80,12 @@ object OrderController extends Controller {
     }
   }
 
+  /**
+    * List all Order from User
+    *
+    * @param username
+    * @return a page of all Order from User for staff
+    */
   def userOrders(username: String): Action[AnyContent] = Action { request =>
     val connected = request.session.get("staff").isDefined
     if (connected) {
@@ -93,9 +99,9 @@ object OrderController extends Controller {
   }
 
   /**
-    * All Orders
+    * List all Order from all User
     *
-    * @return all Orders
+    * @return a page of all Order from all Users
     */
   def allOrders: Action[AnyContent] = Action { request =>
     val connected = request.session.get("staff").isDefined

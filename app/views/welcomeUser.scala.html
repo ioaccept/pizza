@@ -5,7 +5,8 @@
     <h1>Willkommen @username bei @models.Company.name</h1>
 
 
-    <p>Login:
+    <div id="Box">
+        <label>Login:</label>
         @helper.form(action = routes.LoginController.searchUser()) {
             <label>
                 Name: <input type="text" name="Name"><br><br>
@@ -15,6 +16,6 @@
             </label>
             <input type="submit" value="Login" />
         }
-    </p>
+    </div>
 
 }

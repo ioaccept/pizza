@@ -17,24 +17,26 @@
                 <td>@user.name</td>
                 <td>@user.password</td>
                 <td>@user.distance</td>
-                <td>@{if (user.admin) {
-                    "Mitarbeiter"
-                } else {
-                    "Kunde"
-                }
+                <td>@{
+                    if(user.admin) {
+                        "Mitarbeiter"
+                    } else {
+                        "Kunde"
+                    }
                 }</td>
-                <td>@{if (user.active) {
-                    "Aktiv"
-                } else {
-                    "Inaktiv"
-                }
+                <td>@{
+                    if(user.active) {
+                        "Aktiv"
+                    } else {
+                        "Inaktiv"
+                    }
                 }</td>
                 }
     </tr>
     </table>
     <div id="Box">
         <label>
-    Kunden hinzufügen:
+            Kunden hinzufügen:
         </label>
         @helper.form(action = routes.UserController.addUser()) {
             <label>
@@ -51,7 +53,7 @@
             <br>
             <br>
             <label>
-                Ja: <input type="radio" name="Admin" value="true" checked>
+                Mitarbeiter: Ja: <input type="radio" name="Admin" value="true" checked>
             </label>
             <label>
                 Nein: <input type="radio" name="Admin" value="false">
@@ -62,10 +64,10 @@
             <input type="submit" value="Speichern" />
         }
 
-</div>
+    </div>
     <div id="Box">
-    <label>
-    Kundenänderung:
+        <label>
+            Kundenänderung:
         </label>
         @helper.form(action = routes.UserController.changeUser()) {
             <label>
@@ -88,7 +90,7 @@
             <br>
             <br>
             <label>
-                Ja: <input type="radio" name="Admin" value="true">
+                Mitarbeiter: Ja: <input type="radio" name="Admin" value="true">
             </label>
             <label>
                 Nein: <input type="radio" name="Admin" value="false">
@@ -96,7 +98,7 @@
             <br>
             <br>
             <label>
-                Ja: <input type="radio" name="Active" value="true">
+                Aktiv: Ja: <input type="radio" name="Active" value="true">
             </label>
             <label>
                 Nein: <input type="radio" name="Active" value="false">
@@ -109,7 +111,7 @@
     </div>
     <div id="Box">
         <label>
-    Kundenlöschen:
+            Kundenlöschen:
         </label>
         @helper.form(action = routes.UserController.deleteUser()) {
             <label>
@@ -125,6 +127,6 @@
             <input type="hidden" name="Distance" value="1">
             <input type="hidden" name="Admin" value="true">
             <input type="submit" value="Löschen" />
-    </div>
+        </div>
 }
 }
