@@ -13,9 +13,9 @@ trait CategoryServiceT {
   val categoryDao: CategoryDaoT = CategoryDao
 
   /**
-    * Gets a list of all registered users.
+    * Gets a list of all categorys.
     *
-    * @return list of users.
+    * @return list of categorys.
     */
   def showCategory: List[Category] = {
     categoryDao.showCategory

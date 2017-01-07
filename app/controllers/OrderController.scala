@@ -27,9 +27,9 @@ object OrderController extends Controller {
 
 
   /**
-    * Add Order
+    * Adds a new order with the given data to the system.
     *
-    * @return page of all myOrder
+    * @return myOrder web page
     */
   def addOrder: Action[AnyContent] = Action { implicit request =>
     orderForm.bindFromRequest.fold(
@@ -65,9 +65,9 @@ object OrderController extends Controller {
   }
 
   /**
-    * List all Orders from User
+    * List all Orders from Customer.
     *
-    * @return a page of all Orders from User, when it failed return NEIN
+    * @return myOrder web page
     */
   def myOrders: Action[AnyContent] = Action { request =>
     val connected = request.session.get("customer").isDefined
@@ -81,10 +81,10 @@ object OrderController extends Controller {
   }
 
   /**
-    * List all Order from User
+    * List all Order from one Customer for Staff.
     *
     * @param username
-    * @return a page of all Order from User for staff
+    * @return usersOrder web page
     */
   def userOrders(username: String): Action[AnyContent] = Action { request =>
     val connected = request.session.get("staff").isDefined
@@ -92,16 +92,16 @@ object OrderController extends Controller {
       val user = UserService.registeredUsers.find {
         _.name == username
       }.head
-      Ok(views.html.usersOrder(username, OrderService.showOrders(user.id), OrderService.showTotalPrice(user.id), OrderService.showAVGPrice(user.id)))
+      Ok(views.html.customerOrder(username, OrderService.showOrders(user.id), OrderService.showTotalPrice(user.id), OrderService.showAVGPrice(user.id)))
     } else {
       Unauthorized("UserOrders")
     }
   }
 
   /**
-    * List all Order from all User
+    * List all Order from Customer for Staff
     *
-    * @return a page of all Order from all Users
+    * @return allOrder web page
     */
   def allOrders: Action[AnyContent] = Action { request =>
     val connected = request.session.get("staff").isDefined

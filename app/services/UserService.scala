@@ -31,7 +31,7 @@ trait UserServiceT {
   /**
     * Change Data from existing User
     *
-    * @return User
+    * @return changed User
     */
   def changeUser(changeUser: User): User = {
     // change Userdata
@@ -43,7 +43,7 @@ trait UserServiceT {
   /**
     * Disable existing User
     *
-    * @return User
+    * @return disabled User
     */
   def disableUser(changeUser: User): User = {
     // change Userdata

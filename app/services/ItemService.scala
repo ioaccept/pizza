@@ -18,7 +18,7 @@ trait ItemServiceT {
     * @param name
     * @param cat
     * @param price
-    * @return
+    * @return a new Item
     */
   def addItem(name: String, cat: Int, price: BigDecimal, active: Boolean): AddItem = {
     // create User
@@ -33,7 +33,7 @@ trait ItemServiceT {
     * @param name
     * @param cat
     * @param price
-    * @return
+    * @return changed Item
     */
   def changeItem(name: String, cat: BigDecimal, price: BigDecimal, active: Boolean): AddItem = {
     // change Userdata
@@ -53,7 +53,7 @@ trait ItemServiceT {
   /**
     * Gets a list of all items with Category ID
     *
-    * @return list of users.
+    * @return list of items.
     */
   def allItem: List[AddItem] = {
     itemDao.allItem
@@ -62,7 +62,7 @@ trait ItemServiceT {
   /**
     * Gets a list of all items with CategoryName.
     *
-    * @return list of users.
+    * @return list of items.
     */
   def showItem: List[Item] = {
     itemDao.showItem
@@ -71,7 +71,7 @@ trait ItemServiceT {
   /**
     * Gets a list of items who active.
     *
-    * @return list of users.
+    * @return list of items.
     */
   def showActiveItem: List[Item] = {
     itemDao.showActiveItem

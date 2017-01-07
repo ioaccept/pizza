@@ -7,14 +7,14 @@ import models.Category
 
 
 /**
-  * Data access object for items related operations.
+  * Data access object for category related operations.
   *
   * @author ob, scs
   */
 trait CategoryDaoT {
 
   /**
-    * Returns a list of available extras from the database.
+    * Returns a list of available categorys from the database.
     *
     * @return a list of items objects.
     */

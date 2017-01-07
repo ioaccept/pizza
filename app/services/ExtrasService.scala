@@ -13,9 +13,9 @@ trait ExtrasServiceT {
   val extrasDao: ExtrasDaoT = ExtrasDao
 
   /**
-    * Gets a list of all registered users.
+    * Gets a list of all extras.
     *
-    * @return list of users.
+    * @return list of extras.
     */
   def showExtras: List[Extras] = {
     extrasDao.showExtra

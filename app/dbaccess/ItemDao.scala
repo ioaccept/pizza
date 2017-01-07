@@ -12,7 +12,12 @@ import models.{AddItem, Item}
   * @author ob, scs
   */
 trait ItemDaoT {
-
+  /**
+    * Add a new item to system.
+    *
+    * @param item the item object to be stored.
+    * @return the persisted item object
+    */
   def addItem(item: AddItem): AddItem = {
     DB.withConnection { implicit c =>
       val id: Option[Long] =
@@ -23,6 +28,12 @@ trait ItemDaoT {
     item
   }
 
+  /**
+    * Change a existing item.
+    *
+    * @param changeItem
+    * @return changed item object
+    */
   def changeItem(changeItem: AddItem): AddItem = {
     DB.withConnection { implicit c =>
       val change =
@@ -44,6 +55,7 @@ trait ItemDaoT {
       rowsCount > 0
     }
   }
+
   /**
     * Returns a list of available items from the database with the Cat_Id.
     *

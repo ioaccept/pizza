@@ -55,9 +55,9 @@ object UserController extends Controller {
   }
 
   /**
-    * Change the data from existing User
+    * Change the data from existing User.
     *
-    * @return a Page ????
+    * @return showUsers web page
     */
   def changeUser: Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(
@@ -82,9 +82,9 @@ object UserController extends Controller {
   }
 
   /**
-    * Delete a User from System
+    * Delete a user from System.
     *
-    * @return ???????????????Page
+    * @return showUsers web page
     */
   def deleteUser: Action[AnyContent] = Action { implicit request =>
     userForm.bindFromRequest.fold(

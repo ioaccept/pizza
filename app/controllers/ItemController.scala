@@ -13,8 +13,9 @@ import services.{CategoryService, ExtrasService, ItemService, OrderService}
   * @author ob, scs
   */
 object ItemController extends Controller {
+
   /**
-    * Form object for user data.
+    * Form object for item data.
     */
   val itemForm = Form(
     mapping(
@@ -26,9 +27,9 @@ object ItemController extends Controller {
     (CreateItemForm.apply)(CreateItemForm.unapply))
 
   /**
-    * Add a new item to the system
+    * Add a new item to the system if this item does not exist.
     *
-    * @return ??????????????????
+    * @return menu web page
     */
   def addItem: Action[AnyContent] = Action { implicit request =>
     itemForm.bindFromRequest.fold(
@@ -49,9 +50,9 @@ object ItemController extends Controller {
   }
 
   /**
-    * Change the data from existing Item
+    * Change the data from existing Item.
     *
-    * @return a Page ????????????????????????
+    * @return menu web page
     */
   def changeItem: Action[AnyContent] = Action { implicit request =>
     itemForm.bindFromRequest.fold(
@@ -66,9 +67,9 @@ object ItemController extends Controller {
   }
 
   /**
-    * Delete a item from system
+    * Delete a item from system.
     *
-    * @return ?????????????
+    * @return menu web page
     */
   def deleteItem: Action[AnyContent] = Action { implicit request =>
     itemForm.bindFromRequest.fold(
@@ -93,6 +94,11 @@ object ItemController extends Controller {
     )
   }
 
+  /**
+    * Show the existing Items.
+    *
+    * @return menu web page
+    */
   def showItem: Action[AnyContent] = Action { request =>
     val connected = request.session.get("staff").isDefined
     if (connected) {

@@ -26,9 +26,9 @@ object LoginController extends Controller {
 
 
   /**
-    * Show the view for registered User
+    * Show the view for Customer
     *
-    * @return the view for registerd User
+    * @return login page for Customer
     */
   def loginUser: Action[AnyContent] = Action { request =>
     val connected = request.session.get("customer").isDefined
@@ -43,7 +43,7 @@ object LoginController extends Controller {
   /**
     * Show the view for registerd Stuff
     *
-    * @return the view for registerd Stuff
+    * @return login page for Staff
     */
   def loginStaff: Action[AnyContent] = Action { request =>
     val connected = request.session.get("staff").isDefined
@@ -68,7 +68,7 @@ object LoginController extends Controller {
   /**
     * Search a User
     *
-    * @return page for registered User
+    * @return login page
     */
   def searchUser: Action[AnyContent] = Action {
     implicit request =>

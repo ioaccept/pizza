@@ -7,7 +7,7 @@ import models.{Extras, Item}
 
 
 /**
-  * Data access object for items related operations.
+  * Data access object for extras related operations.
   *
   * @author ob, scs
   */
