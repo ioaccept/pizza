@@ -13,5 +13,4 @@ import services.OrderService
   * @author ob, scs
   */
 object ExtraController extends Controller {
-
 }
