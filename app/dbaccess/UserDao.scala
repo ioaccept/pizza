@@ -12,7 +12,7 @@ import models.User
   *
   * @author ob, scs
   */
-trait   UserDaoT {
+trait UserDaoT {
 
   /**
     * Creates the given user in the database.
@@ -59,6 +59,7 @@ trait   UserDaoT {
     }
     changeUser
   }
+
   /**
     * Removes a user by name from the database.
     *

@@ -8,15 +8,15 @@
 
     <div id="LoginBox">
         <p>Login:
-        @helper.form(action = routes.LoginController.searchUser()) {
-            <label>
-                Name: <input type="text" name="Name"><br><br>
-            </label>
-            <label>
-                Passwort: <input type="password" name="Password"><br><br>
-            </label>
-            <input type="submit" value="Login" />
-        }</p>
+            @helper.form(action = routes.LoginController.searchUser()) {
+                <label>
+                    Name: <input type="text" name="Name"><br><br>
+                </label>
+                <label>
+                    Passwort: <input type="password" name="Password"><br><br>
+                </label>
+                <input type="submit" value="Login" />
+            }</p>
     </div>
 
     <p id="RegisterLink"><a href="/registerUser">Registriere dich</a></p>

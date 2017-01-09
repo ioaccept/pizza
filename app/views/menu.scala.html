@@ -13,16 +13,17 @@
                 <td>@item.catName</td>
                 <td>@item.name</td>
                 <td>@item.price €</td>
-                <td>@{if (item.active) {
-                    "Aktiv"
-                } else {
-                    "Inaktiv"
-                }
+                <td>@{
+                    if(item.active) {
+                        "Aktiv"
+                    } else {
+                        "Inaktiv"
+                    }
                 }</td>
             </tr>
         }
     </table>
-<br>
+    <br>
     <table>
         <th>Extras</th>
         <th>Preis pro Extra</th>
@@ -35,7 +36,7 @@
     </table>
     <div id="Box">
         <label>
-    Produktänderung:
+            Produktänderung:
         </label>
         @helper.form(action = routes.ItemController.changeItem()) {
             <label>
@@ -74,7 +75,7 @@
     </div>
     <div id="Box">
         <label>
-    Produkt hinzufügen:
+            Produkt hinzufügen:
         </label>
         @helper.form(action = routes.ItemController.addItem()) {
             <label>
@@ -109,9 +110,9 @@
     </div>
     <div id="Box">
         <label>
-        Produkt löschen:
+            Produkt löschen:
         </label>
-            @helper.form(action = routes.ItemController.deleteItem()) {
+        @helper.form(action = routes.ItemController.deleteItem()) {
             <label>
                 Produktname: <select name="Name">
             @for(item <- items) {

@@ -4,7 +4,7 @@ package forms
 /**
   * Form containing data to create a user.
   *
-  * @param name username
+  * @param name     username
   * @param distance to the company
   * @param password from the user
   */

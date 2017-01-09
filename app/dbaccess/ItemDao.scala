@@ -65,10 +65,11 @@ trait ItemDaoT {
     DB.withConnection { implicit c =>
       val selectItems = SQL("Select * From Items;")
       // Transform the resulting Stream[Row] to a List[(String,String)]
-      val items = selectItems().map(row => AddItem(row[Long]("id"),  row[String]("name"), row[BigDecimal]("cat_id"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
+      val items = selectItems().map(row => AddItem(row[Long]("id"), row[String]("name"), row[BigDecimal]("cat_id"), row[BigDecimal]("Items.price"), row[Boolean]("Items.active"))).toList
       items
     }
   }
+
   /**
     * Returns a list of available items from the database with CategoryName.
     *

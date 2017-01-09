@@ -51,6 +51,7 @@ trait UserServiceT {
     // persist and return User
     userDao.disableUser(disableUser)
   }
+
   /**
     * Removes a user by id from the system.
     *
