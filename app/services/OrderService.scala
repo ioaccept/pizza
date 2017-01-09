@@ -37,7 +37,7 @@ trait OrderServiceT {
     * Shows all Orders from User
     *
     * @param userId userId
-    * @return A list of all Orders from User
+    * @return list of all Orders from User
     */
   def showOrders(userId: Long): List[Order] = {
     orderDao.showOrders(userId)

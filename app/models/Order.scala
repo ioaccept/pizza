@@ -22,7 +22,7 @@ case class Order(var id: Long, var userId: BigDecimal, var userName: String, var
                  var orderQuantity: BigDecimal, var orderSize: BigDecimal, var orderPrice: BigDecimal,
                  var delivery: BigDecimal, var date: Date) {
   /**
-    * Calculate the price from Order without Pizza, no Extra can book by User
+    * Calculate the price from Order without Pizza, no Extra can be booked by User
     */
   def getOrderPrice(): Unit = {
     this.orderExtras = "Keine"

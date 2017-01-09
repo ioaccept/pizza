@@ -6,4 +6,4 @@ package forms
   * @param name from the user
   * @param password from the
   */
-case class LoginUserForm(name: String, password: String)
+case class  LoginUserForm(name: String, password: String)
