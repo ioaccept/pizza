@@ -1,4 +1,4 @@
-name := """Mafiatorten Express""" // please change me
+name := """mafiatorten""" // please change me
 
 version := "Milestone2" // please change me later
 
