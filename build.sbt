@@ -1,6 +1,6 @@
-name := """PizzaFlitza""" // please change me
+name := """Mafiatorten Express""" // please change me
 
-version := "Milestone0" // please change me later
+version := "Milestone2" // please change me later
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 

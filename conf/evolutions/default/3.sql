@@ -5,8 +5,8 @@
 CREATE TABLE Items (
 id serial PRIMARY KEY,
 name varchar(255) NOT NULL,
-cat_id number(10),
-price number(10, 2),
+cat_id numeric(10),
+price numeric(10, 2),
 active boolean DEFAULT TRUE
 );
 

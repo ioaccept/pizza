@@ -5,7 +5,7 @@
 CREATE TABLE Extras (
 id serial PRIMARY KEY,
 name varchar(255) NOT NULL,
-price number(10, 2)
+price numeric(10, 2)
 );
 
 INSERT INTO Extras values (1, 'Keine', 0);

@@ -6,7 +6,7 @@ CREATE TABLE Users (
     id serial PRIMARY KEY,
     name varchar(255) NOT NULL,
     password varchar(255) NOT NULL,
-    distance number(10),
+    distance numeric(10),
     admin boolean,
     active boolean
 );
